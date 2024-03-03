@@ -1,14 +1,13 @@
-import { FooterOnly } from "~/components/layout";
+import config from "~/config";
 import Home from "../Home";
 import Login from "../Login";
-
+import { FooterOnly } from "~/layout";
 const publicRoutes = [
-  { path: "/", component: Home },
   {
-    path: "/login",
+    path: config.routes.login,
     component: Login,
     layout: FooterOnly,
   },
 ];
-const privateRoutes = [];
+const privateRoutes = [{ path: config.routes.home, component: Home }];
 export { publicRoutes, privateRoutes };
