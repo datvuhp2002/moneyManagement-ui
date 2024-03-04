@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import classNames from "classnames/bind";
-import styles from "./Login.module.scss";
+import styles from "./Register.module.scss";
 import requestApi from "~/utils/api";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import * as actions from "~/redux/actions";
 import Input from "~/components/Input";
 import Button from "~/components/Button";
 const cx = classNames.bind(styles);
-const Login = () => {
+const Register = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [loginData, setLoginData] = useState({});
@@ -116,15 +116,6 @@ const Login = () => {
             >
               <Button
                 rounded
-                login
-                type="button"
-                onClick={onSubmit}
-                className="col-md-5"
-              >
-                Đăng nhập
-              </Button>
-              <Button
-                rounded
                 register
                 type="button"
                 className="col-md-5"
@@ -140,4 +131,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;

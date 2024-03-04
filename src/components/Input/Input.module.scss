@@ -1,0 +1,16 @@
+.wrapper {
+  display: block;
+  padding: 1rem;
+  .Icon {
+    display: inline-block;
+    width: 24px;
+    text-align: center;
+  }
+  input {
+    border: 0;
+    width: 100%;
+  }
+  + .wrapper {
+    margin-top: 1rem;
+  }
+}
