@@ -1,10 +1,10 @@
 import React, { Fragment } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { privateRoutes, publicRoutes } from "./components/pages/Routes";
 import { DefaultLayout } from "~/layout";
-import PrivateRoutes from "./layout/PrivateRoutes";
 import { Container } from "react-bootstrap";
-import PublicRoutes from "./layout/PublicRoutes";
+import PrivateRoutes from "~/Route/PrivateRoutes";
+import PublicRoutes from "~/Route/PublicRoutes";
+import { privateRoutes, publicRoutes } from "~/Route/Routes";
 import Layout from "./layout/layout";
 function App() {
   return (
