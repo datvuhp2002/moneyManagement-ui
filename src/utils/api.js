@@ -44,7 +44,6 @@ export default function requestApi(
           localStorage.setItem("access_token", access_token);
           localStorage.setItem("refresh_token", refresh_token);
           originalConfig.headers["Authorization"] = `Bearer ${access_token}`;
-
           return instance(originalConfig);
         } catch (err) {
           if (err.response && err.response.status === 400) {

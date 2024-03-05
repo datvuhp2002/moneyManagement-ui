@@ -1,8 +1,8 @@
 import config from "~/config";
-import Home from "../../components/pages/Home";
-import Login from "../../components/pages/Login";
+import Home from "~/pages/Home";
+import Login from "~/pages/Login";
 import { FooterOnly } from "~/layout";
-import Register from "~/components/pages/Register";
+import Register from "~/pages/Register";
 const publicRoutes = [
   {
     path: config.routes.login,
