@@ -26,7 +26,7 @@ export default function Input({
     <div className={classes}>
       {leftIcon && <span className={cx("Icon")}>{leftIcon}</span>}
       {Comp === "input" ? (
-        <Comp className={classes} {..._props} />
+        <Comp {..._props} />
       ) : (
         <Comp {..._props}>{value}</Comp>
       )}

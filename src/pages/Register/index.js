@@ -8,6 +8,8 @@ import { useDispatch } from "react-redux";
 import * as actions from "~/redux/actions";
 import Input from "~/components/Input";
 import Button from "~/components/Button";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 const cx = classNames.bind(styles);
 const Register = () => {
   const navigate = useNavigate();
@@ -88,26 +90,33 @@ const Register = () => {
             </h5>
           </div>
           <form>
-            <Input
-              name="email"
-              type="email"
-              className="login form-control "
-              placeholder="Email"
-              onChange={onChange}
-            />
-            {formErrors.email && (
-              <p style={{ color: "red" }}>{formErrors.email}</p>
-            )}
-            <Input
-              name="password"
-              type="password"
-              className="login form-control "
-              placeholder="Password"
-              onChange={onChange}
-            />
-            {formErrors.password && (
-              <p style={{ color: "red" }}>{formErrors.password}</p>
-            )}
+            <div className={cx("input-field")}>
+              <FontAwesomeIcon icon={faEnvelope} />
+              <Input
+                leftIcon={<FontAwesomeIcon icon={faEnvelope} />}
+                name="email"
+                type="email"
+                className="login form-control "
+                placeholder="Email"
+                onChange={onChange}
+              />
+              {formErrors.email && (
+                <p style={{ color: "red" }}>{formErrors.email}</p>
+              )}
+              <Input
+                name="password"
+                type="password"
+                className="login form-control "
+                placeholder="Password"
+                onChange={onChange}
+              />
+              {formErrors.password && (
+                <p style={{ color: "red" }}>{formErrors.password}</p>
+              )}
+            </div>
+            <div className={cx("forget-password")}>
+              <Button>Quên mật khẩu</Button>
+            </div>
             <div
               className={
                 (cx("action"),

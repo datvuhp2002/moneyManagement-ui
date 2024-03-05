@@ -8,8 +8,13 @@ import { useDispatch } from "react-redux";
 import * as actions from "~/redux/actions";
 import Input from "~/components/Input";
 import Button from "~/components/Button";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
+import Modal from "react-bootstrap/Modal";
+import ForgetPassword from "~/layout/components/Modal/ForgetPassword";
 const cx = classNames.bind(styles);
 const Login = () => {
+  const [modalShow, setModalShow] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [loginData, setLoginData] = useState({});
@@ -75,13 +80,12 @@ const Login = () => {
         });
     }
   };
-
   return (
     <div className={cx("wrapper")}>
       <div className={cx("container", "d-flex row")}>
         <div className="background col"></div>
-        <div className={cx("form-login", "col-md-6")}>
-          <div className={cx("welcome")}>
+        <div className={cx("form-login", "col-md-4")}>
+          <div className={cx("welcome", "mb-4")}>
             <h1>Xin Chào</h1>
             <h5 className={cx("", "text-opacity")}>
               Hãy đăng nhập để quản lý chi tiêu của bạn
@@ -89,9 +93,10 @@ const Login = () => {
           </div>
           <form>
             <Input
+              leftIcon={<FontAwesomeIcon icon={faEnvelope} />}
               name="email"
               type="email"
-              className="login form-control "
+              login
               placeholder="Email"
               onChange={onChange}
             />
@@ -99,15 +104,34 @@ const Login = () => {
               <p style={{ color: "red" }}>{formErrors.email}</p>
             )}
             <Input
+              password
               name="password"
               type="password"
-              className="login form-control "
               placeholder="Password"
               onChange={onChange}
             />
             {formErrors.password && (
               <p style={{ color: "red" }}>{formErrors.password}</p>
             )}
+            <div
+              className={cx(
+                "forget-password",
+                "d-flex align-items-center justify-content-end"
+              )}
+            >
+              <Button
+                forgetPassword
+                variant="primary"
+                type="button"
+                onClick={() => setModalShow(true)}
+              >
+                Quên mật khẩu?
+              </Button>
+              <ForgetPassword
+                show={modalShow}
+                onHide={() => setModalShow(false)}
+              />
+            </div>
             <div
               className={
                 (cx("action"),
@@ -119,7 +143,7 @@ const Login = () => {
                 login
                 type="button"
                 onClick={onSubmit}
-                className="col-md-5"
+                className="col-md-5 col-sm-1 w-sm-100"
               >
                 Đăng nhập
               </Button>
@@ -127,7 +151,7 @@ const Login = () => {
                 rounded
                 register
                 type="button"
-                className="col-md-5"
+                className="col-md-5 col-sm-1 w-sm-100"
                 to="/register"
               >
                 Đăng ký

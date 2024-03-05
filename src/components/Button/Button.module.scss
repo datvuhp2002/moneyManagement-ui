@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: row;
   font-family: "Roboto", sans-serif;
-  // align-items: center;
+  align-items: center;
   text-align: center;
   justify-content: center;
   min-width: 100px;
@@ -10,8 +10,11 @@
   font-weight: 700;
   font-size: 1.6rem;
   background: var(--white);
+  outline: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   border: 1.5px solid transparent;
+  transition: all 0.2s ease-in-out;
   &.disabled {
     pointer-events: none;
     opacity: 0.5;
@@ -23,26 +26,30 @@
   &.register {
     color: var(--purple-light);
     border: 0.1rem solid var(--purple-light);
+    &:hover {
+      background-color: var(--purple-light);
+      color: var(--white);
+    }
+  }
+  &.forgetPassword {
+    box-shadow: none;
+    color: var(--purple-light);
+    text-decoration: underline;
+  }
+  &.continue {
+    color: var(--purple-light);
+    border: 0.1rem solid var(--purple-light);
   }
   + .wrapper {
+    margin-top: 1rem;
   }
 }
 .rounded {
   border-radius: 9999rem;
-  box-shadow: 0 2px 8px rgb(0 0 0 / 6%);
   &:hover {
-    border-color: rgba(22, 24, 35, 0.2);
-    background-color: rgba(22, 24, 35, 0.03);
-  }
-}
-.primary {
-  background-color: var(--primary);
-  color: var(--white);
-  border-color: var(--primary);
-  &:hover {
-    border-color: var(--primary);
-    background: linear-gradient(0deg, rgba(0, 0, 0, 0.06), rgba(0, 0, 0, 0.06)),
-      #fe2c55;
+    border-color: var(--purple-light);
+    background-color: var(--white);
+    color: var(--purple-light);
   }
 }
 
