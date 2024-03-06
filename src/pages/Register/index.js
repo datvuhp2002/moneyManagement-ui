@@ -9,35 +9,56 @@ import * as actions from "~/redux/actions";
 import Input from "~/components/Input";
 import Button from "~/components/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
+import { faEnvelope, faLock, faUser } from "@fortawesome/free-solid-svg-icons";
 const cx = classNames.bind(styles);
 const Register = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [loginData, setLoginData] = useState({});
+  const [RegisterFormData, setRegisterFormData] = useState({});
+  const [requestData, setRequestData] = useState({});
   const [formErrors, setFormErrors] = useState({});
   const onChange = (e) => {
     let target = e.target;
-    setLoginData({
-      ...loginData,
+    setRegisterFormData({
+      ...RegisterFormData,
       [target.name]: target.value,
     });
   };
-  const validateForm = () => {
+  const validateFormRegister = () => {
     let isValid = true;
     const errors = {};
-    if (loginData.email === "" || loginData.email === undefined) {
-      errors.email = "Please enter email";
+    if (
+      RegisterFormData.username === "" ||
+      RegisterFormData.username === undefined
+    ) {
+      errors.username = "Hãy nhập username của bạn";
+    }
+    if (RegisterFormData.email === "" || RegisterFormData.email === undefined) {
+      errors.email = "Hãy nhập email của bạn";
     } else {
       let valid = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(
-        loginData.email
+        RegisterFormData.email
       );
       if (!valid) {
         errors.email = "Email is not valid";
       }
     }
-    if (loginData.password === "" || loginData.password === undefined) {
-      errors.password = "Please enter password";
+    if (
+      RegisterFormData.password === "" ||
+      RegisterFormData.password === undefined ||
+      RegisterFormData.password.length < 6
+    ) {
+      errors.password = "Mật khẩu không được thiếu và phải trên 6 ký tự";
+    }
+    if (
+      RegisterFormData.check_password === "" ||
+      RegisterFormData.check_password === undefined ||
+      RegisterFormData.check_password.length < 6
+    ) {
+      errors.check_password = "Mật khẩu không được thiếu và phải trên 6 ký tự";
+    }
+    if (RegisterFormData.check_password !== RegisterFormData.password) {
+      errors.check_password = "Mật khẩu không trùng khớp";
     }
     if (Object.keys(errors).length > 0) {
       setFormErrors(errors);
@@ -47,25 +68,24 @@ const Register = () => {
     }
     return isValid;
   };
-  const onSubmit = () => {
-    let valid = validateForm();
+  const onChangePassword = async () => {
+    let valid = validateFormRegister();
     if (valid) {
-      dispatch(actions.controlLoading(true));
-      console.log("Request api");
-      requestApi("/auth/login", "POST", loginData)
+      const { check_password, ...formDataWithoutCheckPassword } =
+        RegisterFormData;
+      console.log(formDataWithoutCheckPassword);
+      await requestApi("/auth/register", "POST", formDataWithoutCheckPassword)
         .then((res) => {
-          console.log(res);
-          dispatch(actions.controlLoading(false));
-          localStorage.setItem("access_token", res.data.access_token);
-          localStorage.setItem("refresh_token", res.data.refresh_token);
-          navigate("/");
+          toast.success("Đăng ký thành công", {
+            position: "top-right",
+          });
+          navigate("/login");
         })
         .catch((err) => {
           console.log("Err", err);
-          dispatch(actions.controlLoading(false));
           if (typeof err.response !== "undefined") {
             if (err.response.status !== 201) {
-              toast.error(err.response.data.message, {
+              toast.error("Email đã tồn tại, thử email khác", {
                 position: "top-right",
               });
             }
@@ -77,7 +97,6 @@ const Register = () => {
         });
     }
   };
-
   return (
     <div className={cx("wrapper")}>
       <div className={cx("container", "d-flex row")}>
@@ -86,17 +105,26 @@ const Register = () => {
           <div className={cx("welcome")}>
             <h1>Xin Chào</h1>
             <h5 className={cx("", "text-opacity")}>
-              Hãy đăng nhập để quản lý chi tiêu của bạn
+              Hãy đăng ký để tạo tài khoản quản lý chi tiêu của bạn
             </h5>
           </div>
-          <form>
+          <div>
             <div className={cx("input-field")}>
-              <FontAwesomeIcon icon={faEnvelope} />
+              <Input
+                leftIcon={<FontAwesomeIcon icon={faUser} />}
+                name="username"
+                login
+                placeholder="Username"
+                onChange={onChange}
+              />
+              {formErrors.username && (
+                <p style={{ color: "red" }}>{formErrors.username}</p>
+              )}
               <Input
                 leftIcon={<FontAwesomeIcon icon={faEnvelope} />}
                 name="email"
                 type="email"
-                className="login form-control "
+                login
                 placeholder="Email"
                 onChange={onChange}
               />
@@ -104,36 +132,48 @@ const Register = () => {
                 <p style={{ color: "red" }}>{formErrors.email}</p>
               )}
               <Input
+                leftIcon={<FontAwesomeIcon icon={faLock} />}
+                password
+                rounded
                 name="password"
                 type="password"
-                className="login form-control "
-                placeholder="Password"
+                placeholder="Mật khẩu"
                 onChange={onChange}
+                autocomplete="new-password"
               />
               {formErrors.password && (
                 <p style={{ color: "red" }}>{formErrors.password}</p>
               )}
-            </div>
-            <div className={cx("forget-password")}>
-              <Button>Quên mật khẩu</Button>
+              <Input
+                leftIcon={<FontAwesomeIcon icon={faLock} />}
+                password
+                rounded
+                name="check_password"
+                type="password"
+                placeholder="Nhập lại mật khẩu"
+                onChange={onChange}
+              />
+              {formErrors.check_password && (
+                <p style={{ color: "red" }}>{formErrors.check_password}</p>
+              )}
             </div>
             <div
               className={
                 (cx("action"),
-                "d-flex align-items-center justify-content-between my-4 row")
+                "d-flex align-items-center justify-content-end my-4")
               }
             >
               <Button
                 rounded
                 register
                 type="button"
-                className="col-md-5"
                 to="/register"
+                onClick={onChangePassword}
               >
                 Đăng ký
               </Button>
             </div>
-          </form>
+          </div>
         </div>
       </div>
     </div>
