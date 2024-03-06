@@ -1,6 +1,6 @@
 import React from "react";
 import Footer from "../components/Footer";
-const DefaultLayout = ({ children }) => {
+const FooterOnly = ({ children }) => {
   return (
     <div>
       <div className="container">
@@ -11,4 +11,4 @@ const DefaultLayout = ({ children }) => {
   );
 };
 
-export default DefaultLayout;
+export default FooterOnly;
