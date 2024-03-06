@@ -9,7 +9,7 @@ import * as actions from "~/redux/actions";
 import Input from "~/components/Input";
 import Button from "~/components/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
+import { faEnvelope, faLock } from "@fortawesome/free-solid-svg-icons";
 import Modal from "react-bootstrap/Modal";
 import ForgetPassword from "~/layout/components/Modal/ForgetPassword";
 const cx = classNames.bind(styles);
@@ -30,7 +30,7 @@ const Login = () => {
     let isValid = true;
     const errors = {};
     if (loginData.email === "" || loginData.email === undefined) {
-      errors.email = "Please enter email";
+      errors.email = "Email không được để trống";
     } else {
       let valid = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(
         loginData.email
@@ -104,6 +104,7 @@ const Login = () => {
               <p style={{ color: "red" }}>{formErrors.email}</p>
             )}
             <Input
+              leftIcon={<FontAwesomeIcon icon={faLock} />}
               password
               name="password"
               type="password"
@@ -135,7 +136,7 @@ const Login = () => {
             <div
               className={
                 (cx("action"),
-                "d-flex align-items-center justify-content-between my-4 row")
+                "d-flex align-items-center justify-content-between mb-4")
               }
             >
               <Button
@@ -143,7 +144,7 @@ const Login = () => {
                 login
                 type="button"
                 onClick={onSubmit}
-                className="col-md-5 col-sm-1 w-sm-100"
+                className="w-100"
               >
                 Đăng nhập
               </Button>
@@ -151,7 +152,7 @@ const Login = () => {
                 rounded
                 register
                 type="button"
-                className="col-md-5 col-sm-1 w-sm-100"
+                className="w-100"
                 to="/register"
               >
                 Đăng ký
