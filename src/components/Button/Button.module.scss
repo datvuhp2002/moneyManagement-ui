@@ -40,12 +40,23 @@
     color: var(--purple-light);
     border: 0.1rem solid var(--purple-light);
   }
-  &.header{
-  box-shadow: none;
+  &.header {
+    box-shadow: none;
+    color: var(--grey);
+  }
+  &.menuItem {
+    display: flex;
+    align-items: start;
+    padding: 0;
+    box-shadow: none;
+    width: 100%;
+    span {
+      text-align: right;
+      width: 100%;
+    }
   }
   + .wrapper:not(.header) {
     margin-top: 1rem;
-
   }
 }
 .rounded {
