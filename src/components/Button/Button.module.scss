@@ -40,8 +40,12 @@
     color: var(--purple-light);
     border: 0.1rem solid var(--purple-light);
   }
-  + .wrapper {
-    margin-left: 1rem;
+  &.header{
+  box-shadow: none;
+  }
+  + .wrapper:not(.header) {
+    margin-top: 1rem;
+
   }
 }
 .rounded {

@@ -18,6 +18,7 @@ export default function Button({
   large = false,
   active = false,
   login,
+  header,
   btnContinue,
   register,
   forgetPassword,
@@ -51,6 +52,7 @@ export default function Button({
   const classes = cx("wrapper", {
     active,
     login,
+    header,
     btnContinue,
     forgetPassword,
     register,
