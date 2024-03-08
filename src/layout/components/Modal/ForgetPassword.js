@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Modal from "react-bootstrap/Modal";
 import Input from "~/components/Input";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
+import { faEnvelope, faLock } from "@fortawesome/free-solid-svg-icons";
 import Button from "~/components/Button";
 import requestApi from "~/utils/api";
 import "./modal.scss";
@@ -183,6 +183,7 @@ const ForgetPassword = ({ ...passProps }) => {
           ) : (
             <div className="changePassword w-100">
               <Input
+                leftIcon={<FontAwesomeIcon icon={faLock} />}
                 password
                 rounded
                 name="change_password"
@@ -195,6 +196,7 @@ const ForgetPassword = ({ ...passProps }) => {
                 <p style={{ color: "red" }}>{formErrors.change_password}</p>
               )}
               <Input
+                leftIcon={<FontAwesomeIcon icon={faLock} />}
                 password
                 rounded
                 name="check_password"
