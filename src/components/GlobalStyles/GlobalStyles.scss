@@ -5,6 +5,7 @@
   --grey: #bebebe;
   --purple-light: #574ee5;
   --modal-width: 40rem;
+  --header-image-size: 5.5rem;
 }
 * {
   margin: 0;
@@ -17,6 +18,13 @@ h1 {
 a {
   text-decoration: none;
 }
+ul {
+  padding: 0rem;
+}
+li {
+  list-style-type: none;
+}
+
 input {
   padding: 0px;
   outline: none;
@@ -31,4 +39,8 @@ body {
 }
 .text-opacity {
   opacity: 0.6;
+}
+.active {
+  border-bottom: 0.1rem solid var(--purple-light);
+  color: var(--purple-light) !important;
 }

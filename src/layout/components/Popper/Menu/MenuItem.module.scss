@@ -1,0 +1,12 @@
+.wrapper {
+  --text-light-color: #666;
+  --text-hover: #292929;
+  padding: 1rem 0;
+  display: flex;
+  .item {
+    color: var(--text-light-color);
+    &:hover {
+      color: var(--text-hover);
+    }
+  }
+}
