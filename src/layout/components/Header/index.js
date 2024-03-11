@@ -21,14 +21,14 @@ const Header = () => {
     [{ title: "Trang cá nhân", path: "/trangcanhan" }],
     [
       { title: "cài đặt", path: "/caidat" },
-      { title: "đăng xuất", onClick: onHandleLogout },
+      { title: "đăng xuất", onClick: onHandleLogout, path: "/login" },
     ],
   ];
   return (
     <div
       className={cx(
         "wrapper",
-        "d-flex align-items-center justify-content-between container"
+        "d-flex align-items-center justify-content-between container "
       )}
     >
       <Button header className={cx("logo")} to="/">
