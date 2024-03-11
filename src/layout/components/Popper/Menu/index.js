@@ -20,7 +20,6 @@ const Menu = ({ children, items }) => {
   return (
     <Tippy
       interactive
-      visible
       placement={"bottom-end"}
       render={(attrs) => (
         <div className={cx("content")} tabIndex={-1} {...attrs}>
