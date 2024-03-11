@@ -1,5 +1,4 @@
 import axios from "axios";
-
 export default function requestApi(
   endpoint,
   method,
@@ -57,7 +56,6 @@ export default function requestApi(
       return Promise.reject(error);
     }
   );
-
   return instance.request({
     method: method,
     url: `${process.env.REACT_APP_API_URL}${endpoint}`,

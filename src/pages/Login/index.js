@@ -56,7 +56,6 @@ const Login = () => {
       console.log("Request api");
       requestApi("/auth/login", "POST", loginData)
         .then((res) => {
-          console.log(res);
           dispatch(actions.controlLoading(false));
           localStorage.setItem("access_token", res.data.access_token);
           localStorage.setItem("refresh_token", res.data.refresh_token);
