@@ -1,4 +1,13 @@
 .wrapper {
   color: red;
-  padding: 1rem;
+  height: var(--header-height);
+  padding: 0rem 1rem;
+  border-bottom: 1px solid var(--grey);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+.content {
+  height: 100%;
+}
+.navbar {
+  height: 100%;
 }

@@ -1,21 +1,23 @@
 import config from "~/config";
 import Home from "~/pages/Home";
 import Login from "~/pages/Login";
-import { FooterOnly } from "~/layout";
 import Register from "~/pages/Register";
 import QuanLyGiaoDich from "~/pages/quanlygiaodich";
 import QuanLyVi from "~/pages/quanlyvi";
 import ThietLapUngDung from "~/pages/thietlapungdung";
 import TrangCaNhan from "~/pages/TrangCaNhan";
 import CaiDat from "~/pages/CaiDat";
+import FooterOnly from "~/layout/FooterOnly";
 const publicRoutes = [
   {
     path: config.routes.login,
     component: Login,
+    layout: FooterOnly,
   },
   {
     path: config.routes.register,
     component: Register,
+    layout: FooterOnly,
   },
 ];
 const privateRoutes = [

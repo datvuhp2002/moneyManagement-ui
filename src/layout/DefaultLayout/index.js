@@ -4,10 +4,8 @@ import Footer from "../components/Footer";
 const DefaultLayout = ({ children }) => {
   return (
     <div>
-      <Header />
-      <div className="container">
-        <div>{children}</div>
-      </div>
+      <Header isPublicRoute={false} />
+      <div className="body my-5">{children}</div>
       <Footer />
     </div>
   );
