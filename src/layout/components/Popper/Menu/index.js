@@ -6,6 +6,7 @@ import styles from "./Menu.module.scss";
 import MenuItem from "./MenuItem";
 import classNames from "classnames/bind";
 import defaultAvatar from "~/public/assets/images/defaultUser.jpg";
+import Button from "~/components/Button";
 const cx = classNames.bind(styles);
 const Menu = ({ children, items }) => {
   const render_Items = () => {
@@ -27,7 +28,7 @@ const Menu = ({ children, items }) => {
         </div>
       )}
     >
-      <div className={cx("user")}>
+      <div className={cx("user", "h-100 d-flex align-items-center")}>
         <Image avatar rounded src={defaultAvatar} alt="" />
       </div>
     </Tippy>
