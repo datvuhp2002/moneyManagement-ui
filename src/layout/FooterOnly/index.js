@@ -1,11 +1,11 @@
 import React from "react";
 import Footer from "../components/Footer";
+import Header from "../components/Header";
 const FooterOnly = ({ children }) => {
   return (
     <div>
-      <div className="container">
-        <div>{children}</div>
-      </div>
+      <Header isPublicRoute={true} />
+      <div className="body my-5">{children}</div>
       <Footer />
     </div>
   );

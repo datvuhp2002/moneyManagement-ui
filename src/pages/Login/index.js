@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import classNames from "classnames/bind";
 import styles from "./Login.module.scss";
 import requestApi from "~/utils/api";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import * as actions from "~/redux/actions";
@@ -10,7 +10,6 @@ import Input from "~/components/Input";
 import Button from "~/components/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope, faLock } from "@fortawesome/free-solid-svg-icons";
-import Modal from "react-bootstrap/Modal";
 import ForgetPassword from "~/layout/components/Modal/ForgetPassword";
 const cx = classNames.bind(styles);
 const Login = () => {

@@ -44,6 +44,9 @@
     box-shadow: none;
     color: var(--grey);
   }
+  &.navLink {
+    height: 100%;
+  }
   &.menuItem {
     display: flex;
     align-items: start;
@@ -55,9 +58,9 @@
       width: 100%;
     }
   }
-  + .wrapper:not(.header) {
-    margin-top: 1rem;
-  }
+  // + .wrapper:not(.header) {
+  //   margin-top: 1rem;
+  // }
 }
 .rounded {
   border-radius: 9999rem;

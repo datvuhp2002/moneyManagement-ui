@@ -16,7 +16,7 @@ import { Wrapper as PopperWrapper } from "../Popper";
 import Menu from "../Popper/Menu";
 import { onHandleLogout } from "~/helper";
 const cx = classNames.bind(styles);
-const Header = () => {
+const Header = ({ isPublicRoute = false }) => {
   const Menu_item = [
     [{ title: "Trang cá nhân", path: "/trangcanhan" }],
     [
@@ -25,37 +25,51 @@ const Header = () => {
     ],
   ];
   return (
-    <div
-      className={cx(
-        "wrapper",
-        "d-flex align-items-center justify-content-between container "
-      )}
-    >
-      <Button header className={cx("logo")} to="/">
-        <Image logo src={Logo}></Image>
-      </Button>
-      <div className={cx("navbar", "d-flex ")}>
-        {privateRoutes.map((item, index) =>
-          item.name ? (
-            <Button header key={index} toActive={item.path}>
-              {item.name}
-            </Button>
-          ) : (
-            ""
-          )
-        )}
-      </div>
-
-      <Menu items={Menu_item}>
-        <button
+    <div className={cx("wrapper")}>
+      {isPublicRoute ? (
+        <div
           className={cx(
-            "user",
-            "d-flex justify-content-end align-items-center"
+            "content",
+            "d-flex align-items-center justify-content-between container h-100"
           )}
         >
-          user
-        </button>
-      </Menu>
+          <Button header className={cx("logo", "h-100")} to="/">
+            <Image logo src={Logo}></Image>
+          </Button>
+        </div>
+      ) : (
+        <div
+          className={cx(
+            "content",
+            "d-flex align-items-center justify-content-between container h-100"
+          )}
+        >
+          <Button header className={cx("logo", "h-100")} to="/">
+            <Image logo src={Logo}></Image>
+          </Button>
+          <div className={cx("navbar", "d-flex")}>
+            {privateRoutes.map((item, index) =>
+              item.name ? (
+                <Button navLink header key={index} toActive={item.path}>
+                  {item.name}
+                </Button>
+              ) : (
+                ""
+              )
+            )}
+          </div>
+          <Menu items={Menu_item}>
+            <button
+              className={cx(
+                "user",
+                "d-flex justify-content-end align-items-center"
+              )}
+            >
+              user
+            </button>
+          </Menu>
+        </div>
+      )}
     </div>
   );
 };
