@@ -1,0 +1,18 @@
+.wrapper {
+  color: var(--grey);
+  .information {
+    font-size: 1.4rem;
+    box-shadow: rgb(0 0 0/12%) 0px 2px 12px;
+    min-height: 50px;
+    min-width: 230px;
+    padding: 12px 24px;
+    width: 100%;
+    padding-top: 8px;
+    border-radius: 1rem;
+  }
+  .user-information {
+    + .user-information {
+      margin-top: 1rem;
+    }
+  }
+}

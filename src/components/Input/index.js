@@ -5,11 +5,12 @@ const cx = classNames.bind(Styles);
 
 export default function Input({
   text = false,
-  value,
+  data,
   login = false,
   className,
   leftIcon,
   rightIcon,
+  children,
   onChange,
   ...passProps
 }) {
@@ -28,7 +29,7 @@ export default function Input({
       {Comp === "input" ? (
         <Comp {..._props} />
       ) : (
-        <Comp {..._props}>{value}</Comp>
+        <Comp {..._props}>{data}</Comp>
       )}
       {rightIcon && <span className={cx("Icon")}>{rightIcon}</span>}
     </div>
