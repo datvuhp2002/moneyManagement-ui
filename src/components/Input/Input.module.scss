@@ -38,4 +38,7 @@
   + .wrapper {
     margin-top: 1rem;
   }
+  &.file {
+    display: none !important;
+  }
 }
