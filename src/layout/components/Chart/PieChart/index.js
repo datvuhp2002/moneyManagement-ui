@@ -35,8 +35,8 @@ const PieChartLayout = ({ data }) => {
         x={x}
         y={y}
         fill={color}
-        textAnchor={x > cx ? "start" : "end"}
-        dominantBaseline="central"
+        textAnchor={x > cx ? "start" : "middle"}
+        
       >
         {percentage}
       </text>
@@ -44,7 +44,7 @@ const PieChartLayout = ({ data }) => {
   };
   return (
     <ResponsiveContainer width="100%" height={300}>
-      <PieChart>
+      <PieChart width={400} height={400}>
         {/* Biểu đồ thu */}
         <Pie
           data={data}
@@ -56,14 +56,12 @@ const PieChartLayout = ({ data }) => {
           fill="#8884d8"
           paddingAngle={5}
           dataKey="value"
-          //dataKey="value"
-          //outerRadius={100}
-          //fill={COLORS[['#FF5733', '#82ca9d', '#8884d8']]} // Sử dụng màu từ mảng COLORS
           label={renderCustomizedLabel}
-        />
-        {data.map((entry, index) => (
-          <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-        ))}
+        >
+          {data.map((entry, index) => (
+            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+          ))}
+        </Pie>
         <Tooltip />
         <Legend align="center" verticalAlign="middle" layout="vertical" />
       </PieChart>
