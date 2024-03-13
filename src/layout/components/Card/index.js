@@ -15,7 +15,7 @@ const Card = ({ data }) => {
       <div className="d-flex flex-column aligin-items-center w-100 justify-content-center">
         <h2>{data.name}</h2>
         <div className="d-flex aligin-datas-center  row ">
-          <h1 className="col-8 overflow-x-auto text-nowrap">{data.money}</h1>{" "}
+          <h1 className="col-8 overflow-x-auto text-nowrap">{data.amount}</h1>{" "}
           <h1 className="col-4">{data.currency}</h1>
         </div>
       </div>
