@@ -5,7 +5,7 @@ import MyDropdown from "./MyDropdow";
 const QuanLyGiaoDich = () => {
   return (
     <div className="container">
-      <div className="left-side">
+      <div className="left-side" >
         {/* Nội dung của phần bên trái */}
         <h2>Quản Lý Giao Dịch</h2>
         </div>

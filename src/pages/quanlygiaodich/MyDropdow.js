@@ -1,8 +1,8 @@
 import React from "react";
 import { Dropdown } from "react-bootstrap";
-import styles from "./Qlgd.module.scss";
 
-const MyDropdown = () => {
+
+function MyDropdown() {
   return (
     <Dropdown>
       <Dropdown.Toggle variant="success" id="dropdown-basic">
@@ -16,6 +16,6 @@ const MyDropdown = () => {
       </Dropdown.Menu>
     </Dropdown>
   );
-};
+}
 
 export default MyDropdown;

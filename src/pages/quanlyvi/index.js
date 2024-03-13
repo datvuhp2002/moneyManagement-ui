@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./quanlyvi.module.scss";
+import styles from "./quanlyvi.module.scss"
 import Card from "~/layout/components/Card";
 import classNames from "classnames/bind";
 import SlideCard from "~/layout/components/SlideCard";
