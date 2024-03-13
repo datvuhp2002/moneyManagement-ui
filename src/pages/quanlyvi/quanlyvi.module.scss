@@ -1,11 +1,14 @@
-.wrapper{
-    display: flex;
-    .manager{
-        .card{
-            overflow-x: scroll;
-        }
+.wrapper {
+  display: flex;
+  .manager {
+    .slide {
+      padding: 2rem 4rem;
+      border: none;
+      .active {
+        border: none;
+      }
     }
-    .add_manager{
-
-    }
+  }
+  .add_manager {
+  }
 }
