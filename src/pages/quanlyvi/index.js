@@ -8,17 +8,17 @@ const QuanLyVi = () => {
   const data = [
     {
       name: "Thu",
-      money: "100000",
+      amount: "100000",
       currency: "VND",
     },
     {
       name: "Chi",
-      money: "10023000",
+      amount: "10023000",
       currency: "VND",
     },
     {
       name: "Viettinbank",
-      money: "10000023423411111111111111111111111111111111111111111111",
+      amount: "10000023423411111111111111111111111111111111111111111111",
       currency: "VND",
     },
     {
