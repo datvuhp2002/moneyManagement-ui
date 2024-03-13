@@ -10,6 +10,10 @@
   &.rounded {
     border-radius: 9999rem;
   }
+  &.avatar_profile {
+    width: var(--profile-image-size);
+    height: var(--profile-image-size);
+  }
 }
 .w100 {
   width: 100%;

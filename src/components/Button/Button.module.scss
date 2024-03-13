@@ -26,10 +26,6 @@
   &.register {
     color: var(--purple-light);
     border: 0.1rem solid var(--purple-light);
-    &:hover {
-      background-color: var(--purple-light);
-      color: var(--white);
-    }
   }
   &.forgetPassword {
     box-shadow: none;
@@ -66,8 +62,8 @@
   border-radius: 9999rem;
   &:hover {
     border-color: var(--purple-light);
-    background-color: var(--white);
-    color: var(--purple-light);
+    color: var(--white);
+    background-color: var(--purple-dark);
   }
 }
 
