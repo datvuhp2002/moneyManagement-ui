@@ -9,9 +9,10 @@ import {
 } from "recharts";
 
 const PieChartLayout = ({ data }) => {
+  
   const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"]; // Mảng các màu sắc cho các khoản thu
 
-  const renderCustomizedLabel = ({
+  const Label = ({
     cx,
     cy,
     midAngle,
@@ -21,7 +22,7 @@ const PieChartLayout = ({ data }) => {
     index,
     color,
   }) => {
-    const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
+    const radius = innerRadius + (outerRadius - innerRadius) * 2.5;
     const x = cx + radius * Math.cos(-midAngle * (Math.PI / 180));
     const y = cy + radius * Math.sin(-midAngle * (Math.PI / 180));
     let total = 0;
@@ -31,13 +32,7 @@ const PieChartLayout = ({ data }) => {
     const percentage = `${((value / total) * 100).toFixed(2)}%`;
 
     return (
-      <text
-        x={x}
-        y={y}
-        fill={color}
-        textAnchor={x > cx ? "start" : "middle"}
-        
-      >
+      <text x={x} y={y} fill={color} textAnchor={x > cx ? "start" : "end"}>
         {percentage}
       </text>
     );
@@ -56,7 +51,7 @@ const PieChartLayout = ({ data }) => {
           fill="#8884d8"
           paddingAngle={5}
           dataKey="value"
-          label={renderCustomizedLabel}
+          label={Label}
         >
           {data.map((entry, index) => (
             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styles from "./Home.scss";
 import PieChartLayout from "~/layout/components/Chart/PieChart";
 import BarChartLayout from "~/layout/components/Chart/BarChart";
-import PureComponent from "./test"
+
 
 const Home = () => {
   // Khai báo các biến và khởi tạo giá trị ban đầu
@@ -62,7 +62,6 @@ const Home = () => {
         {/* Biểu đồ cột */}
         <h2 style={{ textAlign: "center" }}>Biểu đồ cột</h2>
         <BarChartLayout data={data} />
-        
       </div>
 
       <div className="container">
