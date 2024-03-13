@@ -1,0 +1,54 @@
+.bank-card-container {
+  display: flex; // Sử dụng Flexbox để xếp các thẻ theo chiều ngang
+  justify-content: space-between; // Đảm bảo các thẻ được căn cách đều nhau
+}
+
+.bank-card {
+    width: 250px;
+    background-color: hwb(0 100% 0%);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.296);
+    padding: 20px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .card-details {
+    margin-left: 20px;
+    text-align: center;
+  }
+  
+  .card-number {
+    font-size: 18px;
+    margin: 10px 0;
+  }
+  
+  .home {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .bank-card-container {
+    flex: 1;
+  }
+
+  .chart-container {
+    width: 60%; /* Đặt chiều rộng của phần biểu đồ */
+    height: 100%; /* Đặt chiều cao của phần biểu đồ */
+    margin-top: 25px;
+    
+  }
+
+  // .container {
+  //   width: 100%; /* Chia mỗi phần ra 50% chiều rộng của trang */
+  //   height: 100%;
+  //   padding: 20px; /* Thêm padding để tạo khoảng cách giữa các biểu đồ */
+  // }
+  // .container {
+  //   display: flex;
+  //   justify-content: center;
+  // }
+  .container h2 {
+  text-align: center;
+  margin-top: 20px;
+  }

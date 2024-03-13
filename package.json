@@ -24,6 +24,7 @@
     "react-spinners": "^0.13.8",
     "react-tippy": "^1.4.0",
     "react-toastify": "^10.0.4",
+    "recharts": "^2.12.2",
     "redux": "^5.0.1",
     "sass": "^1.71.1",
     "web-vitals": "^2.1.4"
