@@ -20,7 +20,7 @@ export default function Input({
   let Comp = "input";
   let _props = { onChange, ...passProps };
   if (text) {
-    Comp = "h1";
+    Comp = "h5";
   }
   const classes = cx("wrapper", {
     login,

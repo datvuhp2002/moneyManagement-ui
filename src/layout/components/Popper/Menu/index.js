@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Tippy from "@tippyjs/react";
 import Image from "~/components/Image";
 import { Wrapper as PopperWrapper } from "..";
@@ -7,8 +7,10 @@ import MenuItem from "./MenuItem";
 import classNames from "classnames/bind";
 import defaultAvatar from "~/public/assets/images/defaultUser.jpg";
 import Button from "~/components/Button";
+import requestApi from "~/utils/api";
 const cx = classNames.bind(styles);
 const Menu = ({ children, items }) => {
+  const [userData, setUserData] = useState({});
   const render_Items = () => {
     return items?.map((group, index) => (
       <ul key={index} className={cx("item")}>
@@ -18,6 +20,22 @@ const Menu = ({ children, items }) => {
       </ul>
     ));
   };
+  useEffect(() => {
+    try {
+      requestApi("/users/profile", "GET")
+        .then((res) => {
+          setUserData({
+            ...res.data,
+            avatar: `${process.env.REACT_APP_API_URL}/${res.data.avatar}`,
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } catch (err) {
+      console.log(err);
+    }
+  }, []);
   return (
     <Tippy
       interactive
@@ -29,7 +47,7 @@ const Menu = ({ children, items }) => {
       )}
     >
       <div className={cx("user", "h-100 d-flex align-items-center")}>
-        <Image avatar rounded src={defaultAvatar} alt="" />
+        <Image avatar rounded src={userData.avatar} alt="" />
       </div>
     </Tippy>
   );

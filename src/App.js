@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { DefaultLayout } from "~/layout";
 import { Container } from "react-bootstrap";
@@ -6,6 +6,7 @@ import PrivateRoutes from "~/Route/PrivateRoutes";
 import PublicRoutes from "~/Route/PublicRoutes";
 import { privateRoutes, publicRoutes } from "~/Route/Routes";
 import Layout from "./layout/layout";
+import requestApi from "./utils/api";
 function App() {
   return (
     <Router>

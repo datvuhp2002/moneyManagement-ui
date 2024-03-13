@@ -4,9 +4,11 @@
   --white: #fff;
   --grey: #bebebe;
   --purple-light: #574ee5;
+  --purple-dark: #3026ca;
   --modal-width: 40rem;
   --header-image-size: 5.5rem;
   --header-height: 7rem;
+  --profile-image-size: 39rem;
 }
 * {
   margin: 0;
@@ -15,6 +17,10 @@
 }
 h1 {
   font-weight: 800;
+}
+h5 {
+  margin: 0;
+  font-size: 100%;
 }
 a {
   text-decoration: none;
@@ -36,6 +42,7 @@ body {
   font-family: "Roboto", sans-serif;
   font-size: 1.6rem;
   text-rendering: optimizeSpeed;
+  overflow-x: hidden;
 }
 .text-opacity {
   opacity: 0.6;

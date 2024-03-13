@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import classNames from "classnames/bind";
 import styles from "./Header.module.scss";
 import { privateRoutes } from "~/Route/Routes";
@@ -13,6 +13,7 @@ import {
   faXmark,
 } from "@fortawesome/free-solid-svg-icons";
 import { Wrapper as PopperWrapper } from "../Popper";
+import requestApi from "~/utils/api";
 import Menu from "../Popper/Menu";
 import { onHandleLogout } from "~/helper";
 const cx = classNames.bind(styles);
@@ -24,6 +25,7 @@ const Header = ({ isPublicRoute = false }) => {
       { title: "đăng xuất", onClick: onHandleLogout, path: "/login" },
     ],
   ];
+
   return (
     <div className={cx("wrapper")}>
       {isPublicRoute ? (
@@ -58,16 +60,7 @@ const Header = ({ isPublicRoute = false }) => {
               )
             )}
           </div>
-          <Menu items={Menu_item}>
-            <button
-              className={cx(
-                "user",
-                "d-flex justify-content-end align-items-center"
-              )}
-            >
-              user
-            </button>
-          </Menu>
+          <Menu items={Menu_item} />
         </div>
       )}
     </div>

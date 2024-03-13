@@ -32,9 +32,12 @@ const TrangCaNhan = () => {
           return (
             <div
               key={index}
-              className={cx("user-information", "d-flex align-items-center")}
+              className={cx(
+                "user-information",
+                "d-flex align-items-center w-100 justify-content-between"
+              )}
             >
-              <h2 className="mx-3 w-25">{key}</h2>
+              <h2 className="mx-3 w-50">{key}</h2>
               <Input
                 register={{
                   ...register(`${key}`, {
@@ -46,7 +49,6 @@ const TrangCaNhan = () => {
                 data={userData[key]}
                 name={key}
                 keyName={key}
-                className="w-50"
                 placeholder={key}
               />
               {errors[`${key}`] && (
@@ -148,19 +150,22 @@ const TrangCaNhan = () => {
     }
   }, []);
   return (
-    <div className={cx("wrapper", "d-flex row")}>
+    <div className={cx("wrapper", "d-flex row ")}>
       <div
-        className={cx("avatar", "col-3 d-flex flex-column align-items-center")}
+        className={cx(
+          "avatar",
+          "col-md-6 d-flex flex-column align-items-center mb-5"
+        )}
       >
         <h1>Ảnh đại diện</h1>
         <Image
-          w-100
-          logo
+          avatar_profile
+          rounded
           src={userData.avatar}
-          className={cx("avatar-img", "w-100")}
+          className={cx("avatar-img")}
         ></Image>
-        <div>
-          <label htmlFor="file" className="btn-file btn-sm btn btn-primary">
+        <div className="d-flex align-items-center w-100 justify-content-center mt-4">
+          <label htmlFor="file" className={cx("btn_changeAvatar")}>
             Thay đổi avatar
           </label>
           <Input
@@ -172,24 +177,27 @@ const TrangCaNhan = () => {
           />
         </div>
       </div>
-      <div className={cx("information", "col-9 w-75")}>
-        <form>{renderInput()}</form>
-        <div className="d-flex align-items-center justify-content-end w-100">
-          {showForm ? (
-            <Button register rounded onClick={onHandleShowForm}>
-              Chỉnh sửa
-            </Button>
-          ) : (
-            <div className="d-flex">
-              <Button register rounded onClick={handleSubmit(onSubmit)}>
-                Lưu
-              </Button>
+      <div className="col-md-6 h-100 d-flex flex-column">
+        <h1>Tài khoản của bạn</h1>
+        <form className={cx("information")}>
+          {renderInput()}
+          <div className="d-flex align-items-center justify-content-end mt-3">
+            {showForm ? (
               <Button register rounded onClick={onHandleShowForm}>
-                huỷ
+                Chỉnh sửa
               </Button>
-            </div>
-          )}
-        </div>
+            ) : (
+              <div className="d-flex">
+                <Button register rounded onClick={handleSubmit(onSubmit)}>
+                  Lưu
+                </Button>
+                <Button register rounded onClick={onHandleShowForm}>
+                  huỷ
+                </Button>
+              </div>
+            )}
+          </div>
+        </form>
       </div>
     </div>
   );
