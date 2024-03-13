@@ -28,7 +28,7 @@ function App() {
                     path={route.path}
                     element={
                       <Layout>
-                        <Container fluid="md">
+                        <Container >
                           <Page />
                         </Container>
                       </Layout>
