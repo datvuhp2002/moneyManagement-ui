@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import classNames from "classnames/bind";
 import styles from "./Header.module.scss";
 import { privateRoutes } from "~/Route/Routes";
@@ -18,6 +18,7 @@ import Menu from "../Popper/Menu";
 import { onHandleLogout } from "~/helper";
 const cx = classNames.bind(styles);
 const Header = ({ isPublicRoute = false }) => {
+  const [userData, setUserData] = useState({});
   const Menu_item = [
     [{ title: "Trang cá nhân", path: "/trangcanhan" }],
     [
@@ -25,7 +26,22 @@ const Header = ({ isPublicRoute = false }) => {
       { title: "đăng xuất", onClick: onHandleLogout, path: "/login" },
     ],
   ];
-
+  useEffect(() => {
+    try {
+      requestApi("/users/profile", "GET")
+        .then((res) => {
+          setUserData({
+            ...res.data,
+            avatar: `${process.env.REACT_APP_API_URL}/${res.data.avatar}`,
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } catch (err) {
+      console.log(err);
+    }
+  }, []);
   return (
     <div className={cx("wrapper")}>
       {isPublicRoute ? (
@@ -60,7 +76,11 @@ const Header = ({ isPublicRoute = false }) => {
               )
             )}
           </div>
-          <Menu items={Menu_item} />
+          <div className={cx("action")}>
+            <Menu items={Menu_item}>
+              <Image avatar rounded src={userData.avatar} alt="" />
+            </Menu>
+          </div>
         </div>
       )}
     </div>
