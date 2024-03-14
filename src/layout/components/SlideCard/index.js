@@ -7,14 +7,21 @@ const SlideCard = ({ data }) => {
   useEffect(() => {
     console.log(data);
   }, []);
-  return (
-    <Wrapper>
-      <Carousel data-bs-theme="dark" interval={null}>
-        {data.map((item, index) => (
+  const renderData = () => {
+    return data.map((item, index) => {
+      if (!item.isDefault) {
+        return (
           <Carousel.Item key={index}>
             <Card data={item} />
           </Carousel.Item>
-        ))}
+        );
+      }
+    });
+  };
+  return (
+    <Wrapper className="w-100">
+      <Carousel data-bs-theme="dark" interval={null}>
+        {renderData()}
       </Carousel>
     </Wrapper>
   );

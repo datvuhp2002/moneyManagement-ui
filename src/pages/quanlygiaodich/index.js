@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./quanlygiaodich.module.scss";
 
+
 import classNames from "classnames/bind";
 import SlideCard from "~/layout/components/SlideCard";
 
@@ -11,7 +12,6 @@ import BarChartLayout from "~/layout/components/Chart/BarChart";
 
 const cx = classNames.bind(styles);
 const QuanLyGiaoDich = () => {
-
   const datatong = [
     {
       name: "Tổng Tiền Ví",
@@ -121,6 +121,7 @@ const QuanLyGiaoDich = () => {
       </div>
     </div>
   );
+
 };
 
-export default QuanLyGiaoDich
+export default QuanLyGiaoDich;

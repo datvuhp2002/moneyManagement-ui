@@ -17,6 +17,7 @@
     "popper.js": "^1.16.1",
     "react": "^18.2.0",
     "react-bootstrap": "^2.10.1",
+    "react-datepicker": "^6.3.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.51.0",
     "react-redux": "^9.1.0",
@@ -33,6 +34,7 @@
   "devDependencies": {
     "babel-plugin-module-resolver": "^5.0.0",
     "customize-cra": "^1.0.0",
+    "node-sass": "^7.0.3",
     "react-app-rewired": "^2.2.1"
   },
   "scripts": {

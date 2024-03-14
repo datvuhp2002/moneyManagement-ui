@@ -2,14 +2,21 @@
   --desc-color: #0000008a;
   color: var(--desc-color);
   font-size: 1.4rem;
-  max-height: calc(90vh - 66px);
   box-shadow: rgb(0 0 0/12%) 0px 2px 12px;
   min-height: 50px;
   min-width: 230px;
-  overflow-y: auto;
-  overscroll-behavior: contain;
-  padding: 12px 24px;
-  width: 100%;
-  padding-top: 8px;
   border-radius: 1rem;
+  position: relative;
+  + .wrapper {
+    margin-left: 2rem;
+  }
+}
+.chart_data {
+  background-color: var(--white);
+}
+.manager_information {
+  background-color: var(--grey-background);
+}
+.slide_card_money {
+  background-color: var(--color-card-background);
 }

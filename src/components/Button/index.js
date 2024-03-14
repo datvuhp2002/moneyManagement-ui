@@ -20,6 +20,7 @@ export default function Button({
   active = false,
   login,
   navLink,
+  avatar,
   menuItem,
   header,
   isActive,
@@ -31,10 +32,10 @@ export default function Button({
   rightIcon,
   children,
   onClick,
-  ...passsProps
+  ...passProps
 }) {
   let Comp = "button";
-  let _props = { onClick, ...passsProps };
+  let _props = { onClick, ...passProps };
   // remove event listener when btn is disable
   if (disabled) {
     Object.keys(_props).forEach((key) => {
@@ -66,6 +67,7 @@ export default function Button({
     menuItem,
     disabled,
     rounded,
+    avatar,
     text,
     [className]: className,
     small,
