@@ -1,4 +1,5 @@
-.bank-card-container {
+.home{
+  .bank-card-container {
   display: flex; // Sử dụng Flexbox để xếp các thẻ theo chiều ngang
   justify-content: space-between; // Đảm bảo các thẻ được căn cách đều nhau
 }
@@ -36,7 +37,6 @@
     width: 60%; /* Đặt chiều rộng của phần biểu đồ */
     height: 100%; /* Đặt chiều cao của phần biểu đồ */
     margin-top: 25px;
-    
   }
 
   // .container {
@@ -52,3 +52,4 @@
   text-align: center;
   margin-top: 20px;
   }
+}

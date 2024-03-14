@@ -1,5 +1,8 @@
 .carousel {
   padding: 2rem 3rem;
+  background-color: hwb(0 98% 0%);
+    border-radius: 2rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.296);
   .active {
     border: none;
   }

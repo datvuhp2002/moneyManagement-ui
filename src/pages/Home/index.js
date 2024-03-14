@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import styles from "./Home.scss";
 import PieChartLayout from "~/layout/components/Chart/PieChart";
 import BarChartLayout from "~/layout/components/Chart/BarChart";
+import style from "./home.scss";
+
 
 
 const Home = () => {

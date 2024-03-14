@@ -1,0 +1,48 @@
+.container {
+  display: flex; /* Dùng flexbox để chia trang thành hai phần */
+  .left-side {
+    height: auto;
+    width: 30%; /* Chiều rộng của phần bên trái */
+    background-color: hwb(0 100% 0%);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.296);
+  }
+
+  .right-side {
+    height: auto;
+    width: 80%; /* Chiều rộng của phần bên phải */
+    background-color: hwb(0 100% 0%);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.296);
+    margin-left: 2rem;
+  }
+  .chart-container {
+    width: 90%; /* Đặt chiều rộng của phần biểu đồ */
+    height: 30%; /* Đặt chiều cao của phần biểu đồ */
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    margin-left: 1rem;
+  }
+  .containe {
+  display: flex;
+  flex-direction: column; /* Hiển thị các phần theo chiều dọc */
+  height: 100vh; /* Chiều cao của container là 100% chiều cao của màn hình */
+}
+  .top-side {
+    width: 100%; /* Chiều rộng của phần bên trái */
+    height: 50%;
+    background-color: hwb(0 100% 0%);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.296);
+  }
+
+  .bottom-side {
+    width: 100%; /* Chiều rộng của phần bên trái */
+    height: auto;
+    margin-top: 1rem;
+    flex-direction: column; /* Hiển thị các phần theo chiều dọc */
+    background-color: hwb(0 90% 9%);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.296);
+  }
+}
