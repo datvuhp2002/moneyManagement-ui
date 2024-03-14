@@ -8,6 +8,7 @@ export default function Button({
   toActive,
   href,
   ref,
+  fix,
   play = false,
   primary = false,
   outline = false,
@@ -56,6 +57,7 @@ export default function Button({
   const classes = cx("wrapper", {
     active,
     login,
+    fix,
     header,
     navLink,
     btnContinue,
