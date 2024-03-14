@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
 const QuanLyGiaoDich = () => {
-  return (
-    <div>QuanLyGiaoDich</div>
-  )
-}
+  return <div></div>;
+};
 
-export default QuanLyGiaoDich
+export default QuanLyGiaoDich;

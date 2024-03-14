@@ -5,9 +5,15 @@
   box-shadow: rgb(0 0 0/12%) 0px 2px 12px;
   min-height: 50px;
   min-width: 230px;
-  overflow-y: auto;
-  overscroll-behavior: contain;
-  width: 100%;
   border-radius: 1rem;
   position: relative;
+}
+.chart_data {
+  background-color: var(--white);
+}
+.manager_information {
+  background-color: var(--grey-background);
+}
+.slide_card_money {
+  background-color: var(--color-card-background);
 }

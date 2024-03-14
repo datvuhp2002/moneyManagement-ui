@@ -31,10 +31,10 @@ export default function Button({
   rightIcon,
   children,
   onClick,
-  ...passsProps
+  ...passProps
 }) {
   let Comp = "button";
-  let _props = { onClick, ...passsProps };
+  let _props = { onClick, ...passProps };
   // remove event listener when btn is disable
   if (disabled) {
     Object.keys(_props).forEach((key) => {
