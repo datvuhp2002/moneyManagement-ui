@@ -7,6 +7,9 @@
   min-width: 230px;
   border-radius: 1rem;
   position: relative;
+  + .wrapper {
+    margin-left: 2rem;
+  }
 }
 .chart_data {
   background-color: var(--white);

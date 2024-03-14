@@ -7,6 +7,7 @@ export default function Input({
   text = false,
   data,
   file,
+  transaction_information,
   login = false,
   className,
   leftIcon,
@@ -25,6 +26,7 @@ export default function Input({
   const classes = cx("wrapper", {
     login,
     file,
+    transaction_information,
     [className]: className,
   });
   return (
@@ -33,7 +35,7 @@ export default function Input({
       {Comp === "input" ? (
         <Comp {..._props} {...register} />
       ) : (
-        <Comp {..._props}>{data}</Comp>
+        <Comp {..._props}>{data ? data : children}</Comp>
       )}
       {rightIcon && <span className={cx("Icon")}>{rightIcon}</span>}
     </div>
