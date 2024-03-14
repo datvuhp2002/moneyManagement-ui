@@ -8,7 +8,7 @@ const SlideCard = ({ data }) => {
     console.log(data);
   }, []);
   return (
-    <Wrapper>
+    <Wrapper className="w-100">
       <Carousel data-bs-theme="dark" interval={null}>
         {data.map((item, index) => (
           <Carousel.Item key={index}>
