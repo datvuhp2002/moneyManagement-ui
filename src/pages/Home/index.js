@@ -20,9 +20,6 @@ const cx = classNames.bind(styles);
 
 const Home = () => {
   // Khai báo các biến và khởi tạo giá trị ban đầu
-  const [tongTienViS, setTongTienViS] = useState(1000000000); // Tổng tiền Ví S
-  const [tongTienChi, setTongTienChi] = useState(1000000000); // Tổng tiền chi
-  const [tongTienThu, setTongTienThu] = useState(1000000000); // Tổng tiền thu
   const [startDate, setStartDate] = useState(new Date());
 
   const [cardData, setCardData] = useState([]);
@@ -51,7 +48,13 @@ const Home = () => {
     {
       name: "Viettinbank",
       isDefault: false,
-      amount: "11111111111111111",
+      amount: "11111111111111",
+      currency: "VND",
+    },
+    {
+      name: "MB",
+      isDefault: false,
+      amount: "1100000000",
       currency: "VND",
     },
   ];
@@ -119,7 +122,7 @@ const Home = () => {
     <div className={cx("wrapper")}>
       <div className="mb-5">
         <div className="d-flex row">
-          <div className={cx("vitien", "col-5")}>
+          <div className={cx("vitien", "col-3")}>
             <SlideCard data={cardData} />
           </div>
           <div
@@ -131,7 +134,7 @@ const Home = () => {
             {cardData.map((item, index) => {
               if (item.isDefault) {
                 return (
-                  <Wrapper className="p-4 col-5">
+                  <Wrapper className="p-4 mx-auto col-5">
                     <Card data={item} key={index} />
                   </Wrapper>
                 );
@@ -141,53 +144,59 @@ const Home = () => {
         </div>
         <div className={cx("", "d-flex row mt-5")}>
           <div className={cx("bieudocot", "col-6")}>
-            <h2 style={{ textAlign: "center" }}>Biểu đồ cột</h2>
+            <h2 style={{ textAlign: "center" }}>Biểu Đồ Tuần</h2>
             <BarChartLayout data={data} />
           </div>
-          <Wrapper className="col-6 p-4">
-            <div className={cx("thu_chi", "d-flex mb-4 align-items-center")}>
+
+          <div className={cx("thu_chi", "col-5 p-4")}>
+            <div className={cx("", "d-flex mb-4 align-items-center")}>
               <DatePicker
-                className="me-2
-                "
+                className="me-5"
                 selected={startDate}
                 onChange={(date) => setStartDate(date)}
               />
-              <Button rounded login type="button" className="w-50">
+              <Button rounded login type="button" className="w-10">
                 Khoản Thu
               </Button>
-              <Button rounded login type="button" className="w-50">
+              <Button rounded login type="button" className="w-10">
                 Khoản Chi
               </Button>
             </div>
             <div className={cx("transaction_information")}>
               {transactionData.map((item, index) => (
-                <Input
-                  text
-                  transaction_information
-                  leftIcon={
-                    <FontAwesomeIcon icon={item.icon} className="p-2" />
-                  }
-                >
-                  <div className="d-flex justify-content-between align-items-center ">
-                    <h2 className="">{item.name}</h2>
-                    <h2 className="">
-                      {item.amount}
-                      {item.currency}
-                    </h2>
-                  </div>
-                </Input>
+                <div className={cx("input", "mb-3")}>
+                  <Input
+                    text
+                    transaction_information
+                    leftIcon={
+                      <FontAwesomeIcon icon={item.icon} className="p-2" />
+                    }
+                  >
+                    <div className="d-flex justify-content-between align-items-center ">
+                      <h3 className="">{item.name}</h3>
+                      <h3 className="">
+                        {item.amount}
+                        {item.currency}
+                      </h3>
+                    </div>
+                  </Input>
+                </div>
               ))}
             </div>
-          </Wrapper>
+          </div>
         </div>
       </div>
-      <div className="d-flex align-items-center justify-content-between mt-">
-        <div className="col">
-          <h2>Biểu đồ thu tháng</h2>
+      <div className="d-flex align-items-center justify-content-between m-1">
+        <div className={cx("col")}>
+          <h2 style={{ textAlign: "center", marginTop: "2rem" }}>
+            Biểu đồ thu tháng
+          </h2>
           <PieChartLayout data={dataThu} />
         </div>
         <div className="col">
-          <h2>Biểu đồ Chi tháng</h2>
+          <h2 style={{ textAlign: "center", marginTop: "2rem" }}>
+            Biểu đồ Chi tháng
+          </h2>
           <PieChartLayout data={dataChi} />
         </div>
       </div>

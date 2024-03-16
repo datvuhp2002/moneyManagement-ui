@@ -44,8 +44,8 @@ const PieChartLayout = ({ data }) => {
         <Pie
           data={data}
           nameKey="name"
-          cx="20%"
-          cy="40%"
+          cx="50%"
+          cy="50%"
           innerRadius={60}
           outerRadius={80}
           fill="#8884d8"
@@ -58,7 +58,7 @@ const PieChartLayout = ({ data }) => {
           ))}
         </Pie>
         <Tooltip />
-        <Legend align="center" verticalAlign="middle" layout="vertical" />
+        <Legend align="right" verticalAlign="middle" layout="vertical" />
       </PieChart>
     </ResponsiveContainer>
   );
