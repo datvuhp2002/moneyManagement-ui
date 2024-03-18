@@ -85,7 +85,7 @@ const QuanLyGiaoDich = () => {
         <Wrapper slide_card_money className={cx("mt-4")}>
           <SlideCard data={cardData} />
         </Wrapper>
-        <Wrapper chart_data className={("bieudocot", "p-1")}>
+        <Wrapper chart_data className={("bieudocot", "p-1 mt-5")}>
           {/* Biểu đồ cột */}
           <h2 style={{ textAlign: "center" }}>Biểu đồ cột</h2>
           <BarChartLayout data={datacot} />
