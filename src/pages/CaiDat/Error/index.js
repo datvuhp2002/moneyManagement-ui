@@ -63,7 +63,7 @@ const ReportErrorPage = () => {
     <div className={cx("wrapper")}>
       <Container>
         <h1>
-          <MdError className={cx("")} />
+          <MdError className={cx("text-danger me-2 mb-2")} size="30px" />
           Báo cáo lỗi
         </h1>
         <Form onSubmit={handleSubmit}>

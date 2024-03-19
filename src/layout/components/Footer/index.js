@@ -16,13 +16,14 @@ import styles from "./footer.module.scss";
 import classNames from "classnames/bind";
 import { Link } from "react-router-dom";
 
+
 const cx = classNames.bind(styles);
 
 const Footer = () => {
   return (
     <footer className={cx("footer", "text-light py-4 px-5")}>
       <Container>
-        <Row className={cx("justify-content-center")}>
+        <Row className={cx("")}>
           <Col>
             <div className={cx("content", "d-flex align-items-center")}>
               <Button
@@ -41,7 +42,6 @@ const Footer = () => {
               <li>Hoàng Mai, Hà Nội</li>
             </ul>
           </Col>
-
           <Col className={cx("sanpham", "mt-4")}>
             <h2 className={cx("mb-4")}>Sản Phẩm</h2>
             <ul>
@@ -67,7 +67,7 @@ const Footer = () => {
               </li>
             </ul>
           </Col>
-          <Col className={cx("mt-4")}>
+          <Col className={cx("danhgia", "mt-4")}>
             <h2 className={cx("mb-4")}>Đánh Giá</h2>
             <ul>
               <li>
