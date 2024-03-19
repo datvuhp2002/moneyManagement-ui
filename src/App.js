@@ -28,7 +28,7 @@ function App() {
                     path={route.path}
                     element={
                       <Layout>
-                        <Container >
+                        <Container>
                           <Page />
                         </Container>
                       </Layout>

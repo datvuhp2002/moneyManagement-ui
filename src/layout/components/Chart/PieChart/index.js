@@ -1,67 +1,123 @@
-import React from "react";
-import {
-  PieChart,
-  Pie,
-  Tooltip,
-  Cell,
-  Legend,
-  ResponsiveContainer,
-} from "recharts";
+import * as React from "react";
+import { PieChart } from "@mui/x-charts/PieChart";
+import dayjs from "dayjs";
+import moment from "moment";
+import "~/helper/vi";
+import { Wrapper } from "../../Popper";
 
-const PieChartLayout = ({ data }) => {
-  
-  const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"]; // Mảng các màu sắc cho các khoản thu
+export default function PieChartLayout({ data, startDate, endDate }) {
+  const [recordDates, setRecordDates] = React.useState([]);
+  const [expenses, setExpenses] = React.useState([]);
+  const [revenues, setRevenues] = React.useState([]);
 
-  const Label = ({
-    cx,
-    cy,
-    midAngle,
-    innerRadius,
-    outerRadius,
-    value,
-    index,
-    color,
-  }) => {
-    const radius = innerRadius + (outerRadius - innerRadius) * 2.5;
-    const x = cx + radius * Math.cos(-midAngle * (Math.PI / 180));
-    const y = cy + radius * Math.sin(-midAngle * (Math.PI / 180));
-    let total = 0;
-    data.map((i) => {
-      return (total += i.value);
-    });
-    const percentage = `${((value / total) * 100).toFixed(2)}%`;
+  React.useEffect(() => {
+    console.log(data);
+    if (data && data.data && data.data.length > 0) {
+      const extractedRecordDates = data.data.map((item) =>
+        dayjs(item.recordDate).format("YYYY-MM-DD")
+      );
+      const extractedExpenses = data.transaction.data
+        .filter((item) => item.transactionType === "Expense")
+        .map((item) => ({
+          recordDate: item.recordDate,
+          transactionType: item.transactionType,
+          bill: item.bill,
+          note: item.note,
+          paymentImage: item.paymentImage,
+          createdAt: item.createdAt,
+          updatedAt: item.updatedAt,
+          deletedAt: item.deletedAt,
+          deleteMark: item.deleteMark,
+          user_id: item.user_id,
+          wallet_id: item.wallet_id,
+          category_id: item.category_id,
+          currency_id: item.currency_id,
+          categoriesGroup_id: item.categoriesGroup_id,
+        }));
+      const extractedRevenues = data.transaction.data
+        .filter((item) => item.transactionType === "Revenue")
+        .map((item) => ({
+          recordDate: item.recordDate,
+          transactionType: item.transactionType,
+          bill: item.bill,
+          note: item.note,
+          paymentImage: item.paymentImage,
+          createdAt: item.createdAt,
+          updatedAt: item.updatedAt,
+          deletedAt: item.deletedAt,
+          deleteMark: item.deleteMark,
+          user_id: item.user_id,
+          wallet_id: item.wallet_id,
+          category_id: item.category_id,
+          currency_id: item.currency_id,
+          categoriesGroup_id: item.categoriesGroup_id,
+        }));
+      console.log("RecordDate", extractedExpenses);
+      console.log("Expenses", extractedExpenses);
+      console.log("Thu", extractedRevenues);
+      setRecordDates(extractedRecordDates);
+      setExpenses(extractedExpenses);
+      setRevenues(extractedRevenues);
+    } else {
+      setRecordDates([]);
+      setExpenses([]);
+      setRevenues([]);
+    }
+  }, [data]);
 
+  if (
+    recordDates.length === 0 ||
+    expenses.length === 0 ||
+    revenues.length === 0
+  ) {
     return (
-      <text x={x} y={y} fill={color} textAnchor={x > cx ? "start" : "end"}>
-        {percentage}
-      </text>
+      <Wrapper className="p-3">
+        <h2 className="">
+          Không có thống kê nào từ ngày{" "}
+          {moment(startDate).local("vi").format("LL")} đến ngày{" "}
+          {moment(endDate).local("vi").format("LL")}
+        </h2>
+      </Wrapper>
     );
-  };
-  return (
-    <ResponsiveContainer width="100%" height={300}>
-      <PieChart width={400} height={400}>
-        {/* Biểu đồ thu */}
-        <Pie
-          data={data}
-          nameKey="name"
-          cx="20%"
-          cy="40%"
-          innerRadius={60}
-          outerRadius={80}
-          fill="#8884d8"
-          paddingAngle={5}
-          dataKey="value"
-          label={Label}
-        >
-          {data.map((entry, index) => (
-            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-          ))}
-        </Pie>
-        <Tooltip />
-        <Legend align="center" verticalAlign="middle" layout="vertical" />
-      </PieChart>
-    </ResponsiveContainer>
-  );
-};
+  }
 
-export default PieChartLayout;
+  return (
+    <div className="row">
+      <Wrapper chart className="p-3 col-6 m-0">
+        <h2 className="">Biểu đồ doanh thu:</h2>
+        <PieChart
+          series={[
+            {
+              data: revenues.map((revenue, index) => ({
+                id: index,
+                value: revenue.bill,
+                label: `${revenue.note}-${revenue.bill}`,
+              })),
+              highlightScope: { faded: "global", highlighted: "item" },
+              faded: { innerRadius: 30, additionalRadius: -30, color: "gray" },
+            },
+          ]}
+          height={200}
+        />
+      </Wrapper>
+
+      <Wrapper className="p-3 col-6 m-0">
+        <h2 className="">Biểu đồ Chi phí:</h2>
+        <PieChart
+          series={[
+            {
+              data: expenses.map((expense, index) => ({
+                id: index,
+                value: expense.bill,
+                label: expense.note,
+              })),
+              highlightScope: { faded: "global", highlighted: "item" },
+              faded: { innerRadius: 30, additionalRadius: -30, color: "gray" },
+            },
+          ]}
+          height={200}
+        />
+      </Wrapper>
+    </div>
+  );
+}
