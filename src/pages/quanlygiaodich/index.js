@@ -6,8 +6,6 @@ import { Wrapper } from "~/layout/components/Popper";
 import Input from "~/components/Input";
 import Button from "~/components/Button";
 import BarChartLayout from "~/layout/components/Chart/BarChart";
-import "react-datepicker/dist/react-datepicker.css";
-import DatePicker from "react-datepicker";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBuildingColumns,
@@ -72,7 +70,7 @@ const QuanLyGiaoDich = () => {
     { name: "Thứ 7", thu: 1000000, chi: 600000 },
     { name: "Chủ nhật", thu: 1200000, chi: 700000 },
   ];
-   const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(null);
   return (
     <div className={cx("wrapper", "row d-flex")}>
       <Wrapper manager_information className="col-4 p-4 ">
@@ -124,15 +122,7 @@ const QuanLyGiaoDich = () => {
                   </div>
                   <Input placeholder="Số tiền" />
 
-                  <div
-                    className={cx("mt-3")}>
-                    <DatePicker
-                      selected={selectedDate}
-                      onChange={(date) => setSelectedDate(date)}
-                      dateFormat="dd/MM/yyyy"
-                      placeholderText="Chọn ngày"
-                    />
-                  </div>
+                  <div className={cx("mt-3")}>//Date</div>
                 </div>
                 <div class="col">
                   <div className={cx("danhmuc")}>

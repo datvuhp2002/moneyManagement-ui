@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Container, Form, Button, Alert } from "react-bootstrap";
 import styles from "./error.module.scss";
 import classNames from "classnames/bind";
-import { MdError } from "react-icons/md";
 const cx = classNames.bind(styles);
 
 const ReportErrorPage = () => {
@@ -62,10 +61,7 @@ const ReportErrorPage = () => {
   return (
     <div className={cx("wrapper")}>
       <Container>
-        <h1>
-          <MdError className={cx("text-danger me-2 mb-2")} size="30px" />
-          Báo cáo lỗi
-        </h1>
+        <h1>Báo cáo lỗi</h1>
         <Form onSubmit={handleSubmit}>
           {error && <Alert variant="danger">{error}</Alert>}
           {success && (
