@@ -4,6 +4,7 @@ import classNames from "classnames/bind";
 const cx = classNames.bind(styles);
 export default function Wrapper({
   slide_card_money,
+  chart,
   chart_data,
   manager_information,
   children,
@@ -12,6 +13,7 @@ export default function Wrapper({
   const classes = cx("wrapper", {
     slide_card_money,
     chart_data,
+    chart,
     manager_information,
     [className]: className,
   });

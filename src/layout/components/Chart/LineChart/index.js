@@ -1,44 +1,30 @@
-import React, { PureComponent } from "react";
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-} from "recharts";
 
-const LineChartLayout = ({ data }) => {
+import * as React from "react";
+import { LineChart } from "@mui/x-charts/LineChart";
+
+const uData = [4000, 3000, 2000, 2780, 1890, 2390, 3490];
+const pData = [2400, 1398, 9800, 3908, 4800, 3800, 4300];
+const xLabels = [
+  "Page A",
+  "Page B",
+  "Page C",
+  "Page D",
+  "Page E",
+  "Page F",
+  "Page G",
+];
+
+
+export default function SimpleLineChart() {
   return (
-    <ResponsiveContainer width="100%" height={300}>
-      <LineChart
-        width={500}
-        height={300}
-        data={data}
-        margin={{
-          top: 5,
-          right: 30,
-          left: 20,
-          bottom: 5,
-        }}
-      >
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
-        <YAxis />
-        <Tooltip />
-        <Legend />
-        <Line
-          type="monotone"
-          dataKey="pv"
-          stroke="#8884d8"
-          activeDot={{ r: 8 }}
-        />
-        <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
-      </LineChart>
-    </ResponsiveContainer>
+    <LineChart
+      width={500}
+      height={300}
+      series={[
+        { data: pData, label: "pv" },
+        { data: uData, label: "uv" },
+      ]}
+      xAxis={[{ scaleType: "point", data: xLabels }]}
+    />
   );
-};
-
-export default LineChartLayout;
+}

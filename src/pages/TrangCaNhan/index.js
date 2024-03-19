@@ -20,7 +20,6 @@ const TrangCaNhan = () => {
     register,
     handleSubmit,
     setValue,
-    getValues,
     formState: { errors },
   } = useForm();
   const [userData, setUserData] = useState({});
@@ -37,23 +36,28 @@ const TrangCaNhan = () => {
                 "d-flex align-items-center w-100 justify-content-between"
               )}
             >
-              <h2 className="mx-3 w-50">{key}</h2>
-              <Input
-                register={{
-                  ...register(`${key}`, {
-                    required: `${key} không được để trống`,
-                  }),
-                }}
-                key={index}
-                text={showForm}
-                data={userData[key]}
-                name={key}
-                keyName={key}
-                placeholder={key}
-              />
-              {errors[`${key}`] && (
-                <p style={{ color: "red" }}>{errors[`${key}`].message}</p>
-              )}
+              <h2 className="mx-3 w-35">{key}</h2>
+              <div className="w-75">
+                <Input
+                  register={{
+                    ...register(`${key}`, {
+                      required:
+                        key !== "note"
+                          ? `${key} không được để trống`
+                          : undefined,
+                    }),
+                  }}
+                  key={index}
+                  text={showForm}
+                  data={userData[key]}
+                  name={key}
+                  keyName={key}
+                  placeholder={key}
+                />
+                {errors[`${key}`] && (
+                  <p style={{ color: "red" }}>{errors[`${key}`].message}</p>
+                )}
+              </div>
             </div>
           );
       }

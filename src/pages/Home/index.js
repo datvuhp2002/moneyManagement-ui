@@ -5,125 +5,91 @@ import styles from "./Home.module.scss";
 import classNames from "classnames/bind";
 import SlideCard from "~/layout/components/SlideCard";
 import Input from "~/components/Input";
+import dayjs from "dayjs";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Card from "~/layout/components/Card";
-import "react-datepicker/dist/react-datepicker.css";
+import { capitalize } from "lodash";
 import {
   faMoneyCheckDollar,
   faDollarSign,
-  faMoneyBillWave,
 } from "@fortawesome/free-solid-svg-icons";
 import Button from "~/components/Button";
 import { Wrapper } from "~/layout/components/Popper";
-import DatePicker from "react-datepicker";
+import WeekPicker from "~/layout/components/CustomDatePicker";
+import { useDispatch } from "react-redux";
+import requestApi from "~/utils/api";
+import * as actions from "~/redux/actions";
+import moment from "moment";
 const cx = classNames.bind(styles);
-
 const Home = () => {
-  // Khai báo các biến và khởi tạo giá trị ban đầu
-  const [startDate, setStartDate] = useState(new Date());
-
-  const [cardData, setCardData] = useState([]);
-  const data = [
-    { name: "Thứ 2", thu: 500000, chi: 300000 },
-    { name: "Thứ 3", thu: 700000, chi: 400000 },
-    { name: "Thứ 4", thu: 600000, chi: 350000 },
-    { name: "Thứ 5", thu: 800000, chi: 450000 },
-    { name: "Thứ 6", thu: 900000, chi: 500000 },
-    { name: "Thứ 7", thu: 1000000, chi: 600000 },
-    { name: "Chủ nhật", thu: 1200000, chi: 700000 },
-  ];
-  const viData = [
-    {
-      name: "Thu",
-      isDefault: true,
-      amount: "100000",
-      currency: "VND",
-    },
-    {
-      name: "Chi",
-      isDefault: true,
-      amount: "10023000",
-      currency: "VND",
-    },
-    {
-      name: "Viettinbank",
-      isDefault: false,
-      amount: "11111111111111",
-      currency: "VND",
-    },
-    {
-      name: "MB",
-      isDefault: false,
-      amount: "1100000000",
-      currency: "VND",
-    },
-  ];
-  const dataThu = [
-    { name: "Lương", value: 5000000 },
-    { name: "Bán hàng", value: 2000000 },
-    { name: "Lãi đầu tư", value: 1000000 },
-    { name: "Lãi", value: 3000000 },
-  ];
-
-  const dataChi = [
-    { name: "Mua sắm", value: 1500000 },
-    { name: "Hóa đơn", value: 800000 },
-    { name: "Tiền ăn", value: 500000 },
-  ];
-  const transactionData = [
-    { name: "Mua sắm", amount: 20000, icon: faMoneyCheckDollar, currency: "$" },
-    {
-      name: "Tiền thưởng",
-      amount: 20234000,
-      icon: faDollarSign,
-      currency: "$",
-    },
-    {
-      name: "Tiền làm thuê",
-      amount: 202111000,
-      icon: faMoneyCheckDollar,
-      currency: "$",
-    },
-    {
-      name: "Tiền đầu tư",
-      amount: 120000,
-      icon: faMoneyCheckDollar,
-      currency: "$",
-    },
-    {
-      name: "Tiền đầu tư",
-      amount: 120000,
-      icon: faMoneyCheckDollar,
-      currency: "$",
-    },
-    {
-      name: "Tiền nhà",
-      amount: 120000,
-      icon: faMoneyCheckDollar,
-      currency: "$",
-    },
-    {
-      name: "Tiền điện",
-      amount: 120000,
-      icon: faMoneyCheckDollar,
-      currency: "$",
-    },
-    {
-      name: "Tiền nước",
-      amount: 120000,
-      icon: faMoneyCheckDollar,
-      currency: "$",
-    },
-  ];
+  const dispatch = useDispatch();
+  const [numOfPage, setNumOfPages] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [searchString, setSearchString] = useState("");
+  const [transactionType, setTransactionType] = useState("Revenue");
+  const [statisticsData, setStatisticsData] = useState({});
+  const [transactionsData, setTransactionsData] = useState([]);
+  const [statisticsRangeMonthData, setStatisticsRangeMonthData] = useState({});
+  const [transactionMonthData, setTransactionRangeMonthData] = useState([]);
+  const [dateValue, setdateValue] = useState(dayjs().startOf("week"));
+  const [walletData, setWalletData] = useState([]);
+  const [startDate, setStartDate] = useState();
+  const [endDate, setEndDate] = useState();
+  const handleDateChange = (newValue) => {
+    setdateValue(newValue);
+    const { startDate, endDate } = getWeekRange(newValue);
+    setStartDate(startDate);
+    setEndDate(endDate);
+  };
+  const getWeekRange = (date) => {
+    const startOfWeek = date.startOf("week");
+    const endOfWeek = date.endOf("week");
+    const startDate = startOfWeek.format("YYYY-MM-DD");
+    const endDate = endOfWeek.format("YYYY-MM-DD");
+    return { startDate, endDate };
+  };
   useEffect(() => {
-    setCardData(viData);
-  }, []);
+    if (!startDate || !endDate) {
+      const currentDay = dayjs();
+      const { startDate, endDate } = getWeekRange(currentDay);
+      setStartDate(startDate);
+      setEndDate(endDate);
+    }
+    const query = `?&items_per_page=${itemsPerPage}&page=${currentPage}&search=${searchString}&start_date=${startDate}&end_date=${endDate}`;
+    const promiseStatistics = requestApi(
+      `/statistics/calculatorByRange${query}`,
+      "GET"
+    );
+    const promiseStatisticsMonth = requestApi(
+      `/statistics/calculatorByMonth?date=${startDate}`,
+      "GET"
+    );
+    const promiseWallet = requestApi(`/wallet/getAll`, "GET");
+    dispatch(actions.controlLoading(true));
+    Promise.all([promiseStatistics, promiseStatisticsMonth, promiseWallet])
+      .then((res) => {
+        dispatch(actions.controlLoading(false));
+        setStatisticsData(res[0].data);
+        setTransactionsData(res[0].data.transaction.data);
+        setStatisticsRangeMonthData(res[1].data);
+        setTransactionRangeMonthData(res[1].data.transaction.data);
+        setWalletData(res[2].data.data);
+      })
+      .catch((err) => {
+        dispatch(actions.controlLoading(false));
+      });
+  }, [startDate, endDate]);
   return (
     <div className={cx("wrapper")}>
       <div className="mb-5">
-        <div className="d-flex row">
+        <div className="d-flex row"><<<<<<< lam
           <div className={cx("vitien", "col-3")}>
             <SlideCard data={cardData} />
+
+          <div className={cx("vitien", "col-5")}>
+            <SlideCard data={walletData} />
+
           </div>
           <div
             className={cx(
@@ -131,32 +97,39 @@ const Home = () => {
               "d-flex col-7 algin-items-center justify-content-center row"
             )}
           >
-            {cardData.map((item, index) => {
-              if (item.isDefault) {
-                return (
-                  <Wrapper className="p-4 mx-auto col-5">
-                    <Card data={item} key={index} />
-                  </Wrapper>
-                );
-              }
-            })}
+
+            <Wrapper className="p-4 col-5">
+              <Card name="Thu" currency="VND" amount={statisticsData.revenue} />
+            </Wrapper>
+            <Wrapper className="p-4 col-5">
+              <Card name="Chi" currency="VND" amount={statisticsData.expense} />
+            </Wrapper>
+
           </div>
         </div>
         <div className={cx("", "d-flex row mt-5")}>
           <div className={cx("bieudocot", "col-6")}>
-            <h2 style={{ textAlign: "center" }}>Biểu Đồ Tuần</h2>
-            <BarChartLayout data={data} />
-          </div>
 
-          <div className={cx("thu_chi", "col-5 p-4")}>
-            <div className={cx("", "d-flex mb-4 align-items-center")}>
-              <DatePicker
-                className="me-5"
-                selected={startDate}
-                onChange={(date) => setStartDate(date)}
+            <h2 style={{ textAlign: "center" }}>Biểu đồ cột</h2>
+            {statisticsData && (
+              <BarChartLayout
+                data={statisticsData}
+                startDate={startDate}
+                endDate={endDate}
               />
+            )}
+          </div>
+          <Wrapper className="col-6 p-4">
+            <div className={cx("thu_chi", "d-flex mb-4 align-items-center")}>
+              <div className="w-100 me-4">
+                <WeekPicker
+                  value={dateValue}
+                  onChange={handleDateChange}
+                  className="w-100"
+                />
+              </div>
+              <Button rounded login type="button" className="w-50">
 
-              <Button rounded login type="button" className="w-10">
                 Khoản Thu
               </Button>
               <Button rounded login type="button" className="w-10">
@@ -164,41 +137,38 @@ const Home = () => {
               </Button>
             </div>
             <div className={cx("transaction_information")}>
-              {transactionData.map((item, index) => (
-                <div className={cx("input", "mb-3")}>
-                  <Input
-                    text
-                    transaction_information
-                    leftIcon={
-                      <FontAwesomeIcon icon={item.icon} className="p-2" />
-                    }
-                  >
-                    <div className="d-flex justify-content-between align-items-center ">
-                      <h3 className="">{item.name}</h3>
-                      <h3 className="">
-                        {item.amount}
-                        {item.currency}
-                      </h3>
-                    </div>
-                  </Input>
-                </div>
+              {transactionsData.map((item, index) => (
+                <Input
+                  text
+                  transaction_information
+                  leftIcon={
+                    <FontAwesomeIcon icon={item.icon || "$"} className="p-2" />
+                  }
+                >
+                  <div className="d-flex justify-content-between align-items-center ">
+                    <h2 className="">{capitalize(item.note)}</h2>
+                    <h2 className="">
+                      {item.bill}
+                      {item.currency ? item.currency : "VND"}
+                    </h2>
+                  </div>
+                </Input>
+
               ))}
             </div>
           </div>
         </div>
       </div>
-      <div className="d-flex align-items-center justify-content-between m-1">
-        <div className={cx("col")}>
-          <h2 style={{ textAlign: "center", marginTop: "2rem" }}>
-            Biểu đồ thu tháng
+      <div className="d-flex align-items-center justify-content-between mt-">
+        <div className="w-100 mt-2">
+          <h2 className="my-2">
+            Biểu đồ thu tháng {moment(startDate).month() + 1}
           </h2>
-          <PieChartLayout data={dataThu} />
-        </div>
-        <div className="col">
-          <h2 style={{ textAlign: "center", marginTop: "2rem" }}>
-            Biểu đồ Chi tháng
-          </h2>
-          <PieChartLayout data={dataChi} />
+          <PieChartLayout
+            data={statisticsRangeMonthData}
+            startDate={startDate}
+            endDate={endDate}
+          />
         </div>
       </div>
     </div>

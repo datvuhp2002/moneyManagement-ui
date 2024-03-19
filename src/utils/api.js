@@ -2,7 +2,7 @@ import axios from "axios";
 export default function requestApi(
   endpoint,
   method,
-  body = [],
+  body,
   responseType = "json",
   contentType = "application/json"
 ) {
@@ -35,7 +35,7 @@ export default function requestApi(
         try {
           console.log("call refresh token api");
           const result = await instance.post(
-            `${process.env.REACT_APP_API_URL}/auth/refresh-token`,
+            `${process.env.REACT_APP_API_URL}/auth/refresh_token`,
             {
               refresh_token: localStorage.getItem("refresh_token"),
             }
