@@ -3,7 +3,6 @@ import styles from "./quanlyvi.module.scss";
 import Card from "~/layout/components/Card";
 import classNames from "classnames/bind";
 import SlideCard from "~/layout/components/SlideCard";
-
 import Button from "~/components/Button";
 import LineChartLayout from "~/layout/components/Chart/LineChart";
 import { Wrapper } from "~/layout/components/Popper";
@@ -108,6 +107,7 @@ const QuanLyVi = () => {
           <h1>Tài khoản</h1>
           <form>
             <div className="">
+              
               <Input placeholder="Tên tài khoản" />
               <Input placeholder="Số tiền" />
               <Input placeholder="Nội dung" />

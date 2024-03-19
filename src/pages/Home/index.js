@@ -83,9 +83,13 @@ const Home = () => {
   return (
     <div className={cx("wrapper")}>
       <div className="mb-5">
-        <div className="d-flex row">
+        <div className="d-flex row"><<<<<<< lam
+          <div className={cx("vitien", "col-3")}>
+            <SlideCard data={cardData} />
+
           <div className={cx("vitien", "col-5")}>
             <SlideCard data={walletData} />
+
           </div>
           <div
             className={cx(
@@ -93,16 +97,19 @@ const Home = () => {
               "d-flex col-7 algin-items-center justify-content-center row"
             )}
           >
+
             <Wrapper className="p-4 col-5">
               <Card name="Thu" currency="VND" amount={statisticsData.revenue} />
             </Wrapper>
             <Wrapper className="p-4 col-5">
               <Card name="Chi" currency="VND" amount={statisticsData.expense} />
             </Wrapper>
+
           </div>
         </div>
         <div className={cx("", "d-flex row mt-5")}>
           <div className={cx("bieudocot", "col-6")}>
+
             <h2 style={{ textAlign: "center" }}>Biểu đồ cột</h2>
             {statisticsData && (
               <BarChartLayout
@@ -122,9 +129,10 @@ const Home = () => {
                 />
               </div>
               <Button rounded login type="button" className="w-50">
+
                 Khoản Thu
               </Button>
-              <Button rounded login type="button" className="w-50">
+              <Button rounded login type="button" className="w-10">
                 Khoản Chi
               </Button>
             </div>
@@ -145,9 +153,10 @@ const Home = () => {
                     </h2>
                   </div>
                 </Input>
+
               ))}
             </div>
-          </Wrapper>
+          </div>
         </div>
       </div>
       <div className="d-flex align-items-center justify-content-between mt-">

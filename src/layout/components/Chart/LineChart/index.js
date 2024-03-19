@@ -1,3 +1,4 @@
+
 import * as React from "react";
 import { LineChart } from "@mui/x-charts/LineChart";
 
@@ -12,6 +13,7 @@ const xLabels = [
   "Page F",
   "Page G",
 ];
+
 
 export default function SimpleLineChart() {
   return (

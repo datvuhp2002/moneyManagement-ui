@@ -7,6 +7,7 @@ import QuanLyVi from "~/pages/quanlyvi";
 import ThietLapUngDung from "~/pages/thietlapungdung";
 import TrangCaNhan from "~/pages/TrangCaNhan";
 import CaiDat from "~/pages/CaiDat";
+import ReportErrorPage from "~/pages/CaiDat/Error";
 import FooterOnly from "~/layout/FooterOnly";
 const publicRoutes = [
   {
@@ -42,5 +43,6 @@ const privateRoutes = [
     component: TrangCaNhan,
   },
   { path: config.routes.caidat, component: CaiDat },
+  { path: config.routes.error, component: ReportErrorPage },
 ];
 export { publicRoutes, privateRoutes };

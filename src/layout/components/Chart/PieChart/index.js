@@ -82,6 +82,7 @@ export default function PieChartLayout({ data, startDate, endDate }) {
   }
 
   return (
+
     <div className="row">
       <Wrapper chart className="p-3 col-6 m-0">
         <h2 className="">Biểu đồ doanh thu:</h2>

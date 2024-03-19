@@ -7,5 +7,6 @@ const routes = {
   thietlapungdung: "/thietlapungdung",
   trangcanhan: "/trangcanhan",
   caidat: "caidat",
+  error: "/Error",
 };
 export default routes;
