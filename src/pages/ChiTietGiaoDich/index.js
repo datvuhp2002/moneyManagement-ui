@@ -13,6 +13,9 @@ import { useDispatch } from "react-redux";
 import * as actions from "~/redux/actions";
 import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
+import { moment } from "moment";
+import dayjs from "dayjs";
+
 import { startCase } from "lodash";
 const cx = classNames.bind(styles);
 const ChiTietGiaoDich = () => {
@@ -31,13 +34,17 @@ const ChiTietGiaoDich = () => {
   const [categoryData, setCategoryData] = useState({});
   const [currencyData, setCurrencyData] = useState({});
   const [walletData, setWalletData] = useState({});
-  const [allCategoryGroupData, setAllCategoryGroupData] = useState({});
+  const [allCategoryGroupData, setAllCategoryGroupData] = useState([]);
   const [allCategoryData, setAllCategoryData] = useState([]);
   const [allCurrencyData, setAllCurrencyData] = useState([]);
   const [allWalletData, setAllWalletData] = useState([]);
   const onHandleShowForm = () => {
     Object.keys(transactionData).map((key) => {
-      setValue(key, transactionData[key]);
+      if (key !== "recordDate") {
+        setValue(key, transactionData[key]);
+      } else {
+        setValue(key, dayjs(transactionData.recordDate).format("YYYY-MM-DD"));
+      }
     });
     setShowForm(!showForm);
   };
@@ -54,10 +61,10 @@ const ChiTietGiaoDich = () => {
       reader.readAsDataURL(file);
       try {
         let formData = new FormData();
-        formData.append("avatar", file);
+        formData.append("paymentImage", file);
         dispath(actions.controlLoading(true));
         requestApi(
-          "/users/upload-avatar",
+          `/transaction/upload-paymentImage/${params.id}`,
           "PUT",
           formData,
           "json",
@@ -65,12 +72,12 @@ const ChiTietGiaoDich = () => {
         ).then((res) => {
           console.log(res);
           dispath(actions.controlLoading(false));
-          toast.success("Thay avatar thành công", {
+          toast.success("Thay đổi ảnh giao dịch thành công thành công", {
             position: "top-right",
           });
         });
       } catch (err) {
-        console.log(err);
+        console.log(err.message);
         toast.success(err.response.data.message, {
           position: "top-right",
         });
@@ -80,10 +87,44 @@ const ChiTietGiaoDich = () => {
   };
   const onSubmit = async (data) => {
     try {
-      // Submit data to update transaction
-    } catch (err) {
-      console.log(err);
-    }
+      const recordDateFormat = dayjs(data.recordDate).format();
+      const {
+        paymentImage,
+        ownership_categoriesGroup,
+        ownership_category,
+        ownership_currency,
+        ownership_wallet,
+        ...transactionDataWithoutPaymentImage
+      } = data;
+      transactionDataWithoutPaymentImage.recordDate = recordDateFormat;
+      console.log(transactionDataWithoutPaymentImage);
+      await requestApi(
+        `/transaction/${params.id}`,
+        "PUT",
+        transactionDataWithoutPaymentImage
+      )
+        .then((res) => {
+          toast.success("cập nhật thành công", {
+            position: "top-right",
+          });
+          setTransactionData(data);
+          setShowForm(!showForm);
+        })
+        .catch((err) => {
+          console.log("Err", err);
+          if (typeof err.response !== "undefined") {
+            if (err.response.status !== 201) {
+              toast.error(err.response.data.message, {
+                position: "top-right",
+              });
+            }
+          } else {
+            toast.error("Server is down, please try again", {
+              position: "top-right",
+            });
+          }
+        });
+    } catch (err) {}
   };
   useEffect(() => {
     const promiseGetAllWallet = requestApi(`/wallet/getAll`, "GET");
@@ -115,7 +156,6 @@ const ChiTietGiaoDich = () => {
           setAllCategoryData(res[2].data.data);
           setAllCategoryGroupData(res[3].data.data);
           setAllWalletData(res[4].data.data);
-          console.log(res[0].data);
         })
         .catch((err) => {
           console.log(err.message);
@@ -139,7 +179,7 @@ const ChiTietGiaoDich = () => {
           rounded
           src={transactionData.paymentImage}
           className={cx("avatar-img")}
-        ></Image>
+        />
         <div className="d-flex align-items-center w-100 justify-content-center mt-4">
           <label htmlFor="file" className={cx("btn_changeAvatar")}>
             Thay đổi ảnh giao dịch
@@ -209,7 +249,9 @@ const ChiTietGiaoDich = () => {
                       }),
                     }}
                     text={showForm}
-                    data={transactionData.recordDate}
+                    data={dayjs(transactionData.recordDate).format(
+                      "MM/DD/YYYY"
+                    )}
                     name="recordDate"
                     keyName="recordDate"
                     placeholder="ngày giao dịch"
@@ -227,20 +269,42 @@ const ChiTietGiaoDich = () => {
                 <h3 className="mx-3 w-40">Loại giao dịch</h3>
                 <div>
                   <select
+                    name="transactionType"
                     register={{
-                      ...register(`category_groups`, {
-                        required: `Hoá đơn không được để trống`,
-                      }),
+                      ...register(`transactionType`),
+                    }}
+                  >
+                    <option value="Revenue">Thu</option>
+                    <option value="Expense">Chi</option>
+                  </select>
+                  {errors[`transactionType`] && (
+                    <p style={{ color: "red" }}>
+                      {errors[`transactionType`].message}
+                    </p>
+                  )}
+                </div>
+              </div>
+              <div className="">
+                <h3 className="mx-3 w-40">Thể loại giao dịch</h3>
+                <div>
+                  <select
+                    register={{
+                      ...register(`categoriesGroup_id`),
                     }}
                   >
                     {allCategoryGroupData.map((item, index) => {
                       return (
-                        <option value={item.id} key={item.key}>
+                        <option value={item.id} key={index}>
                           {item.note}
                         </option>
                       );
                     })}
                   </select>
+                  {errors[`categoriesGroup_id`] && (
+                    <p style={{ color: "red" }}>
+                      {errors[`categoriesGroup_id`].message}
+                    </p>
+                  )}
                 </div>
               </div>
               <div className=" ">
@@ -248,15 +312,21 @@ const ChiTietGiaoDich = () => {
                 <div>
                   <select
                     register={{
-                      ...register(`category`, {
-                        required: `Hoá đơn không được để trống`,
-                      }),
+                      ...register(`category_id`),
                     }}
                   >
                     {allCategoryData.map((item, index) => {
-                      return <option value={item.id}>{item.name}</option>;
+                      return (
+                        <option value={item.categoriesGroup_id} key={index}>
+                          {item.name}
+                        </option>
+                      );
                     })}
+                    <option value="2">ABc</option>
                   </select>
+                  {errors[`category`] && (
+                    <p style={{ color: "red" }}>{errors[`category`].message}</p>
+                  )}
                 </div>
               </div>
               <div className="">
@@ -264,17 +334,21 @@ const ChiTietGiaoDich = () => {
                 <div>
                   <select
                     register={{
-                      ...register(`wallet`, {
-                        required: `Ví không được để trống`,
-                      }),
+                      ...register(`wallet_id`),
                     }}
                   >
                     {allWalletData.map((item, index) => {
-                      return <option value={item.id}>{item.name}</option>;
+                      return (
+                        <option value={item.id} key={index}>
+                          {item.name}
+                        </option>
+                      );
                     })}
                   </select>
-                  {errors[`wallet`] && (
-                    <p style={{ color: "red" }}>{errors[`wallet`].message}</p>
+                  {errors[`wallet_id`] && (
+                    <p style={{ color: "red" }}>
+                      {errors[`wallet_id`].message}
+                    </p>
                   )}
                 </div>
               </div>
