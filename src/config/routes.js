@@ -6,6 +6,7 @@ const routes = {
   quanlyvi: "/quanlyvi",
   thietlapungdung: "/thietlapungdung",
   trangcanhan: "/trangcanhan",
+  chitietgiaodich: "chitietgiaodich/:id",
   caidat: "caidat",
   error: "/Error",
 };

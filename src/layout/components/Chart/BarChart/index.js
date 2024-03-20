@@ -9,7 +9,6 @@ export default function BarChartLayout({ data, startDate, endDate }) {
   const [expenses, setExpenses] = useState([]);
   const [revenues, setRevenues] = useState([]);
   useEffect(() => {
-    console.log(data);
     if (data && data.data && data.data.length > 0) {
       const extractedRecordDates = data.data.map((item) =>
         dayjs(item.recordDate).format("YYYY-MM-DD")
@@ -42,7 +41,6 @@ export default function BarChartLayout({ data, startDate, endDate }) {
   }
   return (
     <BarChart
-      width={500}
       height={300}
       series={[
         { data: expenses, label: "Chi", id: "expenseId" },

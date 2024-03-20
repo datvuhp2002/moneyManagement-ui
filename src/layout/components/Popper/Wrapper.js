@@ -9,8 +9,10 @@ export default function Wrapper({
   manager_information,
   children,
   className,
+  money,
 }) {
   const classes = cx("wrapper", {
+    money,
     slide_card_money,
     chart_data,
     chart,
