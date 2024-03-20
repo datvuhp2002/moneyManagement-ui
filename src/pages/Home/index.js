@@ -9,10 +9,7 @@ import dayjs from "dayjs";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Card from "~/layout/components/Card";
 import { capitalize } from "lodash";
-import {
-  faMoneyCheckDollar,
-  faDollarSign,
-} from "@fortawesome/free-solid-svg-icons";
+import * as logo from "@fortawesome/free-solid-svg-icons";
 import Button from "~/components/Button";
 import { Wrapper } from "~/layout/components/Popper";
 import WeekPicker from "~/layout/components/CustomDatePicker";
@@ -27,11 +24,11 @@ const Home = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [searchString, setSearchString] = useState("");
-  const [transactionType, setTransactionType] = useState("Revenue");
   const [statisticsData, setStatisticsData] = useState({});
   const [transactionsData, setTransactionsData] = useState([]);
   const [statisticsRangeMonthData, setStatisticsRangeMonthData] = useState({});
   const [transactionMonthData, setTransactionRangeMonthData] = useState([]);
+  const [transactionType, setTransactionType] = useState("");
   const [dateValue, setdateValue] = useState(dayjs().startOf("week"));
   const [walletData, setWalletData] = useState([]);
   const [startDate, setStartDate] = useState();
@@ -49,6 +46,10 @@ const Home = () => {
     const endDate = endOfWeek.format("YYYY-MM-DD");
     return { startDate, endDate };
   };
+  const onChangeOption = (e) => {
+    const target = e.target;
+    setTransactionType(target.value);
+  };
   useEffect(() => {
     if (!startDate || !endDate) {
       const currentDay = dayjs();
@@ -56,7 +57,7 @@ const Home = () => {
       setStartDate(startDate);
       setEndDate(endDate);
     }
-    const query = `?&items_per_page=${itemsPerPage}&page=${currentPage}&search=${searchString}&start_date=${startDate}&end_date=${endDate}`;
+    const query = `?transaction_type=${transactionType}&items_per_page=${itemsPerPage}&page=${currentPage}&search=${searchString}&start_date=${startDate}&end_date=${endDate}`;
     const promiseStatistics = requestApi(
       `/statistics/calculatorByRange${query}`,
       "GET"
@@ -79,7 +80,7 @@ const Home = () => {
       .catch((err) => {
         dispatch(actions.controlLoading(false));
       });
-  }, [startDate, endDate]);
+  }, [startDate, endDate, transactionType]);
   return (
     <div className={cx("wrapper")}>
       <div className="mb-5">
@@ -93,10 +94,10 @@ const Home = () => {
               "d-flex col-7 algin-items-center justify-content-center row"
             )}
           >
-            <Wrapper className="p-4 col-5">
+            <Wrapper className="p-4 col-5" money>
               <Card name="Thu" currency="VND" amount={statisticsData.revenue} />
             </Wrapper>
-            <Wrapper className="p-4 col-5">
+            <Wrapper className="p-4 col-5" money>
               <Card name="Chi" currency="VND" amount={statisticsData.expense} />
             </Wrapper>
           </div>
@@ -121,12 +122,13 @@ const Home = () => {
                   className="w-100"
                 />
               </div>
-              <Button rounded login type="button" className="w-50">
-                Khoản Thu
-              </Button>
-              <Button rounded login type="button" className="w-50">
-                Khoản Chi
-              </Button>
+              <select className="" onChange={onChangeOption}>
+                <option value="" defaultChecked>
+                  Tất cả
+                </option>
+                <option value="Chi">Chi</option>
+                <option value="Thu">Thu</option>
+              </select>
             </div>
             <div className={cx("transaction_information")}>
               {transactionsData.map((item, index) => (

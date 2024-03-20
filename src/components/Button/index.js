@@ -9,6 +9,7 @@ export default function Button({
   href,
   ref,
   fix,
+  deleteBtn,
   play = false,
   primary = false,
   outline = false,
@@ -57,6 +58,7 @@ export default function Button({
   const classes = cx("wrapper", {
     active,
     login,
+    deleteBtn,
     fix,
     header,
     navLink,

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Input from "~/components/Input";
 const LiveSearch = ({ onKeySearch }) => {
   const [keyword, setKeyword] = useState("");
   //   debounce search
@@ -13,11 +14,10 @@ const LiveSearch = ({ onKeySearch }) => {
     setKeyword(target.value);
   };
   return (
-    <input
+    <Input
       type="search"
       onChange={onTyping}
-      className="form-control form-control-sm ms-1"
-      placeholder="Email or Name"
+      placeholder="Tìm kiếm theo ghi chú"
     />
   );
 };

@@ -9,6 +9,7 @@ import TrangCaNhan from "~/pages/TrangCaNhan";
 import CaiDat from "~/pages/CaiDat";
 import ReportErrorPage from "~/pages/CaiDat/Error";
 import FooterOnly from "~/layout/FooterOnly";
+import ChiTietGiaoDich from "~/pages/ChiTietGiaoDich";
 const publicRoutes = [
   {
     path: config.routes.login,
@@ -44,5 +45,6 @@ const privateRoutes = [
   },
   { path: config.routes.caidat, component: CaiDat },
   { path: config.routes.error, component: ReportErrorPage },
+  { path: config.routes.chitietgiaodich, component: ChiTietGiaoDich },
 ];
 export { publicRoutes, privateRoutes };
