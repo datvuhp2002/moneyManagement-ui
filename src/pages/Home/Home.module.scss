@@ -1,20 +1,12 @@
 .wrapper {
-  .thu_chi{
-    margin-left: 11rem;
+  .thu_chi {
     font-size: 2rem;
-    .transaction_information {
-    max-height: 23rem;
-    overflow-y: scroll;
-    .input{
-      width: 95%;
-    }
   }
+}
+.transaction_information {
+  max-height: 25rem;
+  overflow-y: scroll;
+  .input {
+    width: 95%;
   }
-  .default_card{
-   margin-left: 4rem;
-  }
-  .vitien{
-    margin-left: 10rem;
-  }
-  
 }

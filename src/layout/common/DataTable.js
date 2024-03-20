@@ -5,20 +5,15 @@ const DataTable = (props) => {
     name,
     columns,
     data,
-    currentPage,
-    numOfPage,
-    onPageChange,
-    onChangeItemsPerPage,
+    onChangeTransactionType,
     onKeySearch,
     onSelectedRows,
   } = props;
   const [selectedRows, setSelectedRows] = useState([]);
-
   useEffect(() => {
     console.log("selected rows=> ", selectedRows);
     onSelectedRows(selectedRows);
   }, [selectedRows]);
-  //
   const renderHeader = () => {
     return columns?.map((col, index) => <th key={index}>{col.name}</th>);
   };
@@ -40,7 +35,6 @@ const DataTable = (props) => {
       </tr>
     ));
   };
-  // handle checked checkboxes
   const onClickCheckbox = (e) => {
     let checked = e.target.checked;
     let value = e.target.value;
@@ -64,44 +58,9 @@ const DataTable = (props) => {
       setSelectedRows([]);
     }
   };
-  // Pagination
-  const renderPagination = () => {
-    const pagination = [];
-    const nextPage = currentPage + 1 > numOfPage ? null : currentPage + 1;
-    const prevPage = currentPage - 1 < 1 ? null : currentPage - 1;
-    pagination.push(
-      <li key="prev" className={prevPage ? "page-item" : "page-item disabled"}>
-        <button className="page-link" onClick={() => onPageChange(prevPage)}>
-          &laquo;
-        </button>
-      </li>
-    );
-    for (let i = 1; i <= numOfPage; i++) {
-      pagination.push(
-        <li
-          key={i}
-          className={currentPage === i ? "page-item active" : "page-item"}
-        >
-          <button className="page-link" onClick={() => onPageChange(i)}>
-            {i}
-          </button>
-        </li>
-      );
-    }
-    pagination.push(
-      <li key="next" className={nextPage ? "page-item" : "page-item disabled"}>
-        <button className="page-link" onClick={() => onPageChange(nextPage)}>
-          &raquo;
-        </button>
-      </li>
-    );
-    return pagination;
-  };
-  // On change items per page
   const onChangeOption = (e) => {
     const target = e.target;
-    console.log(target.value);
-    onChangeItemsPerPage(target.value);
+    onChangeTransactionType(target.value);
   };
   return (
     <div className="card mb-4 ">
@@ -111,25 +70,22 @@ const DataTable = (props) => {
       <div className="card-body">
         <div className="row mb-3">
           <div className="col-sm-12 col-md-6">
-            <label className="d-inline-flex">
-              Show
+            <label className="d-inline-flex w-25">
               <select
                 name="example_length"
-                className="form-select form-select-sm ms-1 me-1"
+                className="form-select form-select-sm ms-1 me-1 "
                 onChange={onChangeOption}
               >
-                <option value="1">1</option>
-                <option value="5">5</option>
-                <option value="10">10</option>
+                <option value="" defaultChecked>
+                  Tất cả
+                </option>
+                <option value="Chi">Chi</option>
+                <option value="Thu">Thu</option>
               </select>
-              entries
             </label>
           </div>
-          <div className="col-sm-12 col-md-6">
-            <label className="d-line-flex float-end">
-              Search:
-              <LiveSearch onKeySearch={onKeySearch} />
-            </label>
+          <div className="col-sm-12 col-md-6 d-flex">
+            <LiveSearch onKeySearch={onKeySearch} />
           </div>
         </div>
         <table
@@ -156,13 +112,6 @@ const DataTable = (props) => {
           </thead>
           <tbody>{renderData()}</tbody>
         </table>
-        {numOfPage > 1 && (
-          <nav aria-label="Page navigation example ">
-            <ul className="pagination d-flex justify-content-center">
-              {renderPagination()}
-            </ul>
-          </nav>
-        )}
       </div>
     </div>
   );
