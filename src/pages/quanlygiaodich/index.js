@@ -14,7 +14,7 @@ import {
   faEye,
   faPhone,
   faTrash,
-} from "@fortawesome/free-solid-svg-icons";
+} from "@for  wesome/free-solid-svg-icons";
 import Card from "~/layout/components/Card";
 import dayjs from "dayjs";
 import WeekPicker from "~/layout/components/CustomDatePicker";
