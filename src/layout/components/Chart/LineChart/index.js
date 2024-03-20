@@ -1,30 +1,56 @@
-
-import * as React from "react";
+import React, { useEffect, useState } from "react";
 import { LineChart } from "@mui/x-charts/LineChart";
+import dayjs from "dayjs";
+import moment from "moment";
+import "~/helper/vi";
+import { Wrapper } from "../../Popper";
 
-const uData = [4000, 3000, 2000, 2780, 1890, 2390, 3490];
-const pData = [2400, 1398, 9800, 3908, 4800, 3800, 4300];
-const xLabels = [
-  "Page A",
-  "Page B",
-  "Page C",
-  "Page D",
-  "Page E",
-  "Page F",
-  "Page G",
-];
+export default function LineChartLayout({ data, startDate, endDate }) {
+  const [recordDates, setRecordDates] = useState([]);
+  const [expenses, setExpenses] = useState([]);
+  const [revenues, setRevenues] = useState([]);
 
+  useEffect(() => {
+    if (data && data.data && data.data.length > 0) {
+      const extractedRecordDates = data.data.map((item) =>
+        dayjs(item.recordDate).format("YYYY-MM-DD")
+      );
+      const extractedExpenses = data.data.map((item) => item.expense);
+      const extractedRevenues = data.data.map((item) => item.revenue);
+      setRecordDates(extractedRecordDates);
+      setExpenses(extractedExpenses);
+      setRevenues(extractedRevenues);
+    } else {
+      setRecordDates([]);
+      setExpenses([]);
+      setRevenues([]);
+    }
+  }, [data]);
 
-export default function SimpleLineChart() {
+  if (
+    recordDates.length === 0 ||
+    expenses.length === 0 ||
+    revenues.length === 0
+  ) {
+    return (
+      <Wrapper className="p-3">
+        <h2 className="">
+          Không có thống kê nào từ ngày{" "}
+          {moment(startDate).local("vi").format("LL")} đến ngày{" "}
+          {moment(endDate).local("vi").format("LL")}
+        </h2>
+      </Wrapper>
+    );
+  }
+
   return (
     <LineChart
-      width={500}
-      height={300}
+      height={400}
       series={[
-        { data: pData, label: "pv" },
-        { data: uData, label: "uv" },
+        { data: expenses, label: "Chi", id: "expenseId" },
+        { data: revenues, label: "Thu", id: "revenueId" },
       ]}
-      xAxis={[{ scaleType: "point", data: xLabels }]}
+      xAxis={[{ data: recordDates, scaleType: "point" }]}
     />
   );
 }

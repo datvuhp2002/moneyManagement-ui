@@ -116,28 +116,29 @@ const ThemGiaoDich = () => {
         )}
       >
         <h1>Ảnh giao dịch</h1>
-        {paymentImage && (
-          <img
-            style={{ width: "300px" }}
-            src={paymentImage}
-            className="mb-2"
-            alt="..."
-          />
-        )}
-        <label htmlFor="file" className="btn-file btn-sm btn btn-primary">
-          Browse Files
-        </label>
-        <input
-          type="file"
-          id="file"
-          className="d-none"
-          name="paymentImage"
-          {...register("paymentImage", {
-            required: "paymentImage is required",
-            onChange: onImageChange,
-          })}
-          accept="image/*"
+        <Image
+          avatar_profile
+          rounded
+          src={paymentImage}
+          className={cx("avatar-img")}
         />
+        <div className="d-flex align-items-center w-100 justify-content-center mt-4">
+          <label htmlFor="file" className={cx("btn_changeAvatar")}>
+            Thay đổi ảnh giao dịch
+          </label>
+          <Input
+            file
+            id="file"
+            type="file"
+            accept="image/*"
+            register={{
+              ...register("paymentImage", {
+                required: "paymentImage is required",
+                onChange: onImageChange,
+              }),
+            }}
+          />
+        </div>
       </div>
       <div className="col-md-6 h-100 d-flex flex-column">
         <h1>Thông tin giao dịch</h1>
