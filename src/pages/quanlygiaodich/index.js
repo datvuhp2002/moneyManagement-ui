@@ -14,7 +14,7 @@ import {
   faEye,
   faPhone,
   faTrash,
-} from "@fortawesome/free-solid-svg-icons";
+} from "@for  wesome/free-solid-svg-icons";
 import Card from "~/layout/components/Card";
 import dayjs from "dayjs";
 import WeekPicker from "~/layout/components/CustomDatePicker";
@@ -72,7 +72,7 @@ const QuanLyGiaoDich = () => {
           <div className="d-flex">
             <Button
               leftIcon={<FontAwesomeIcon icon={faEye} />}
-              to={`/chitietgiaodich/${row.id}`}
+              to={`/quanlygiaodich/chitietgiaodich/${row.id}`}
               className="btn btn-sm btn-warning me-1"
             >
               <i className="fa fa-pencil"></i> Xem
@@ -186,78 +186,6 @@ const QuanLyGiaoDich = () => {
           </Wrapper>
         </Wrapper>
         <div className={cx("add_manager col-7")}>
-          <Wrapper className="py-4 px-4 ">
-            <div className="d-flex align-items-center justify-content-between">
-              <h1 className="me-auto">Giao Dịch</h1>
-            </div>
-
-            <div>
-              <div className="">
-                <div className="row">
-                  <div class="col">
-                    <div className={cx("taikhoan")}>
-                      <label for="cars">Tài Khoản</label>
-                      <FontAwesomeIcon
-                        icon={faBuildingColumns}
-                        className={cx("ms-2")}
-                      />
-                      <select name="cars" id="cars">
-                        {walletData.map((item, index) => {
-                          return (
-                            <option value={item.id} key={index}>
-                              {item.name}
-                            </option>
-                          );
-                        })}
-                      </select>
-                    </div>
-                    <Input placeholder="Số tiền" />
-                    <div className={cx("mt-3")}>
-                      <WeekPicker
-                        value={dateValue}
-                        onChange={handleDateChange}
-                        className="w-100"
-                      />
-                    </div>
-                  </div>
-                  <div class="col">
-                    <div className={cx("danhmuc")}>
-                      <label for="cars">Danh Mục</label>
-                      <FontAwesomeIcon
-                        icon={faCartShopping}
-                        className={cx("ms-2")}
-                      />
-                      <select name="cars" id="cars">
-                        <option value="Expense">Chi</option>
-                        <option value="Revenue">Thu</option>
-                      </select>
-                    </div>
-                    <Input placeholder="Nội dung" />
-                    <div
-                      className={cx(
-                        "d-flex mt-3 align-items-center justify-content-end"
-                      )}
-                    >
-                      <select name="cars" id="cars">
-                        <option value="thietyeu">Thiết yếu</option>
-                        <option value="sinhhoat">Sinh hoạt</option>
-                        <option value="anuong">Ăn uống</option>
-                        <option value="huongthu">Hưởng thụ</option>
-                      </select>
-                    </div>
-                    <div className="d-flex mt-3 align-items-center justify-content-end">
-                      <Button login rounded className={cx("")}>
-                        Lọc
-                      </Button>
-                      <Button login rounded>
-                        Thêm
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </Wrapper>
           <Wrapper className="py-4 px-4 mt-4">
             <div
               className={cx(
@@ -265,9 +193,15 @@ const QuanLyGiaoDich = () => {
               )}
             >
               <h1>Lịch Sử Giao dịch</h1>
-              <Button login rounded>
-                Xuất Báo Cáo
-              </Button>
+              <WeekPicker value={dateValue} onChange={handleDateChange} />
+              <div className="d-flex ">
+                <Button register rounded to="/quanlygiaodich/themgiaodich">
+                  Thêm giao dịch
+                </Button>
+                <Button login rounded>
+                  Xuất Báo Cáo
+                </Button>
+              </div>
             </div>
             <DataTable
               name={`Lịch sử giao dịch theo tháng  ${moment(startDate)

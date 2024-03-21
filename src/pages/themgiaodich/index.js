@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import requestApi from "~/utils/api";
 import { useNavigate } from "react-router-dom";
 import classNames from "classnames/bind";
-import styles from "./ChiTietGiaoDich.module.scss";
+import styles from "./ThemGiaoDich.module.scss";
 import Image from "~/components/Image";
 import Button from "~/components/Button";
 import Input from "~/components/Input";
@@ -13,100 +13,59 @@ import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import dayjs from "dayjs";
 const cx = classNames.bind(styles);
-const ChiTietGiaoDich = () => {
+const ThemGiaoDich = () => {
   const params = useParams();
   const dispath = useDispatch();
-  const [showForm, setShowForm] = useState(true);
   const navigate = useNavigate();
   const {
     register,
     handleSubmit,
-    setValue,
     formState: { errors },
   } = useForm();
   const [transactionData, setTransactionData] = useState({});
-  const [categoryGroupData, setCategoryGroupData] = useState({});
-  const [categoryData, setCategoryData] = useState({});
-  const [currencyData, setCurrencyData] = useState({});
-  const [walletData, setWalletData] = useState({});
   const [allCategoryGroupData, setAllCategoryGroupData] = useState([]);
   const [allCategoryData, setAllCategoryData] = useState([]);
   const [allCurrencyData, setAllCurrencyData] = useState([]);
   const [allWalletData, setAllWalletData] = useState([]);
-  const onHandleShowForm = () => {
-    Object.keys(transactionData).map((key) => {
-      if (key !== "recordDate") {
-        setValue(key, transactionData[key]);
-      } else {
-        setValue(key, dayjs(transactionData.recordDate).format("YYYY-MM-DD"));
-      }
-    });
-    setShowForm(!showForm);
-  };
+  const [paymentImage, setPaymentImage] = useState("");
   const onImageChange = (e) => {
-    if (e.target.files[0]) {
-      const file = e.target.files[0];
+    if (e.target.files && e.target.files[0]) {
       let reader = new FileReader();
       reader.onload = (e) => {
-        setTransactionData({
-          ...transactionData,
-          paymentImage: reader.result,
-        });
+        setPaymentImage(reader.result);
       };
-      reader.readAsDataURL(file);
-      try {
-        let formData = new FormData();
-        formData.append("paymentImage", file);
-        dispath(actions.controlLoading(true));
-        requestApi(
-          `/transaction/upload-paymentImage/${params.id}`,
-          "PUT",
-          formData,
-          "json",
-          "multipart/form-data"
-        ).then((res) => {
-          console.log(res);
-          dispath(actions.controlLoading(false));
-          toast.success("Thay đổi ảnh giao dịch thành công thành công", {
-            position: "top-right",
-          });
-        });
-      } catch (err) {
-        console.log(err.message);
-        toast.success(err.response.data.message, {
-          position: "top-right",
-        });
-        dispath(actions.controlLoading(false));
-      }
+      reader.readAsDataURL(e.target.files[0]);
     }
   };
-
   const onSubmit = async (data) => {
+    data.recordDate = dayjs(data.recordDate).format();
+    console.log(data);
+    let formData = new FormData();
+    for (let key in data) {
+      if (key === "paymentImage") {
+        formData.append(key, data[key][0]);
+      } else {
+        formData.append(key, data[key]);
+      }
+    }
+    dispath(actions.controlLoading(true));
     try {
-      const recordDateFormat = dayjs(data.recordDate).format();
-      const {
-        paymentImage,
-        ownership_categoriesGroup,
-        ownership_category,
-        ownership_currency,
-        ownership_wallet,
-        ...transactionDataWithoutPaymentImage
-      } = data;
-      transactionDataWithoutPaymentImage.recordDate = recordDateFormat;
-      console.log(transactionDataWithoutPaymentImage);
       await requestApi(
-        `/transaction/${params.id}`,
-        "PUT",
-        transactionDataWithoutPaymentImage
+        `/transaction`,
+        "POST",
+        formData,
+        "json",
+        "multipart/form-data"
       )
         .then((res) => {
+          dispath(actions.controlLoading(false));
           toast.success("cập nhật thành công", {
             position: "top-right",
           });
           setTransactionData(data);
-          setShowForm(!showForm);
         })
         .catch((err) => {
+          dispath(actions.controlLoading(false));
           console.log("Err", err);
           if (typeof err.response !== "undefined") {
             if (err.response.status !== 201) {
@@ -127,31 +86,18 @@ const ChiTietGiaoDich = () => {
     const promiseGetAllCategoriesGroup = requestApi(`/category-group/getAll`);
     const promiseGetAllCategory = requestApi(`/category/getAll`);
     const promiseGetAllCurrency = requestApi(`/currency/getAll`);
-    const promiseDetailTransactionData = requestApi(
-      `/transaction/detail/${params.id}`,
-      "GET"
-    );
     try {
       Promise.all([
-        promiseDetailTransactionData,
         promiseGetAllCurrency,
         promiseGetAllCategory,
         promiseGetAllCategoriesGroup,
         promiseGetAllWallet,
       ])
         .then((res) => {
-          setTransactionData({
-            ...res[0].data,
-            paymentImage: `${process.env.REACT_APP_API_URL}/${res[0].data.paymentImage}`,
-          });
-          setCategoryGroupData(res[0].data.ownership_categoriesGroup);
-          setCategoryData(res[0].data.ownership_category);
-          setCurrencyData(res[0].data.ownership_currency);
-          setWalletData(res[0].data.ownership_wallet);
-          setAllCurrencyData(res[1].data.data);
-          setAllCategoryData(res[2].data.data);
-          setAllCategoryGroupData(res[3].data.data);
-          setAllWalletData(res[4].data.data);
+          setAllCurrencyData(res[0].data.data);
+          setAllCategoryData(res[1].data.data);
+          setAllCategoryGroupData(res[2].data.data);
+          setAllWalletData(res[3].data.data);
         })
         .catch((err) => {
           console.log(err.message);
@@ -173,7 +119,7 @@ const ChiTietGiaoDich = () => {
         <Image
           avatar_profile
           rounded
-          src={transactionData.paymentImage}
+          src={paymentImage}
           className={cx("avatar-img")}
         />
         <div className="d-flex align-items-center w-100 justify-content-center mt-4">
@@ -185,7 +131,12 @@ const ChiTietGiaoDich = () => {
             id="file"
             type="file"
             accept="image/*"
-            onChange={onImageChange}
+            register={{
+              ...register("paymentImage", {
+                required: "paymentImage is required",
+                onChange: onImageChange,
+              }),
+            }}
           />
         </div>
       </div>
@@ -203,7 +154,6 @@ const ChiTietGiaoDich = () => {
                         required: `Hoá đơn không được để trống`,
                       }),
                     }}
-                    text={showForm}
                     data={transactionData.bill}
                     keyName="bill"
                     placeholder="hoá đơn"
@@ -222,7 +172,6 @@ const ChiTietGiaoDich = () => {
                         required: `Hoá đơn không được để trống`,
                       }),
                     }}
-                    text={showForm}
                     data={transactionData.note}
                     keyName="note"
                     placeholder="ghi chú"
@@ -240,13 +189,13 @@ const ChiTietGiaoDich = () => {
                     register={{
                       ...register(`recordDate`, {
                         required: `Ngày giao dịch không được để trống`,
-                        validate: {
-                          validFormat: (value) =>
-                            dayjs(value, "YYYY-MM-DD", true).isValid() ||
-                            "Định dạng ngày không hợp lệ",
-                        },
                       }),
                     }}
+                    data={dayjs(transactionData.recordDate).format(
+                      "MM/DD/YYYY"
+                    )}
+                    keyName="recordDate"
+                    placeholder="ngày giao dịch"
                   />
                   {errors[`recordDate`] && (
                     <p style={{ color: "red" }}>
@@ -330,20 +279,11 @@ const ChiTietGiaoDich = () => {
             </div>
           </div>
           <div className="d-flex align-items-center justify-content-end mt-3">
-            {showForm ? (
-              <Button register rounded onClick={onHandleShowForm}>
-                Chỉnh sửa
+            <div className="d-flex">
+              <Button register rounded onClick={handleSubmit(onSubmit)}>
+                Thêm
               </Button>
-            ) : (
-              <div className="d-flex">
-                <Button register rounded onClick={handleSubmit(onSubmit)}>
-                  Lưu
-                </Button>
-                <Button register rounded onClick={onHandleShowForm}>
-                  huỷ
-                </Button>
-              </div>
-            )}
+            </div>
           </div>
         </form>
       </div>
@@ -351,4 +291,4 @@ const ChiTietGiaoDich = () => {
   );
 };
 
-export default ChiTietGiaoDich;
+export default ThemGiaoDich;
