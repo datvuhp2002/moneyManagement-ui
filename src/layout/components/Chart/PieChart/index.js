@@ -82,9 +82,8 @@ export default function PieChartLayout({ data, startDate, endDate }) {
   }
 
   return (
-
-    <div className="row">
-      <Wrapper chart className="p-3 col-6 m-0">
+    <div className="d-flex">
+      <Wrapper chart className="p-3 w-50 ">
         <h2 className="">Biểu đồ doanh thu:</h2>
         <PieChart
           series={[
@@ -102,7 +101,7 @@ export default function PieChartLayout({ data, startDate, endDate }) {
         />
       </Wrapper>
 
-      <Wrapper className="p-3 col-6 m-0">
+      <Wrapper className="p-3 w-50 ms-3">
         <h2 className="">Biểu đồ Chi phí:</h2>
         <PieChart
           series={[
