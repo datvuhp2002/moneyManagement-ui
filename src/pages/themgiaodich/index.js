@@ -37,9 +37,10 @@ const ThemGiaoDich = () => {
       reader.readAsDataURL(e.target.files[0]);
     }
   };
+
   const onSubmit = async (data) => {
-    data.recordDate = dayjs(data.recordDate).format();
     console.log(data);
+    data.recordDate = dayjs(data.recordDate).format();
     let formData = new FormData();
     for (let key in data) {
       if (key === "paymentImage") {
@@ -85,7 +86,7 @@ const ThemGiaoDich = () => {
     const promiseGetAllWallet = requestApi(`/wallet/getAll`, "GET");
     const promiseGetAllCategoriesGroup = requestApi(`/category-group/getAll`);
     const promiseGetAllCategory = requestApi(`/category/getAll`);
-    const promiseGetAllCurrency = requestApi(`/currency/getAll`);
+    const promiseGetAllCurrency = requestApi(`/currency`);
     try {
       Promise.all([
         promiseGetAllCurrency,
@@ -95,6 +96,7 @@ const ThemGiaoDich = () => {
       ])
         .then((res) => {
           setAllCurrencyData(res[0].data.data);
+          console.log(res[0].data.data);
           setAllCategoryData(res[1].data.data);
           setAllCategoryGroupData(res[2].data.data);
           setAllWalletData(res[3].data.data);
@@ -116,12 +118,13 @@ const ThemGiaoDich = () => {
         )}
       >
         <h1>Ảnh giao dịch</h1>
-        <Image
-          avatar_profile
-          rounded
-          src={paymentImage}
-          className={cx("avatar-img")}
-        />
+        {paymentImage && (
+          <Image
+            avatar_profile
+            src={paymentImage}
+            className={cx("avatar-img")}
+          />
+        )}
         <div className="d-flex align-items-center w-100 justify-content-center mt-4">
           <label htmlFor="file" className={cx("btn_changeAvatar")}>
             Thay đổi ảnh giao dịch
@@ -133,7 +136,6 @@ const ThemGiaoDich = () => {
             accept="image/*"
             register={{
               ...register("paymentImage", {
-                required: "paymentImage is required",
                 onChange: onImageChange,
               }),
             }}
@@ -269,11 +271,6 @@ const ThemGiaoDich = () => {
                       );
                     })}
                   </select>
-                  {errors[`wallet_id`] && (
-                    <p style={{ color: "red" }}>
-                      {errors[`wallet_id`].message}
-                    </p>
-                  )}
                 </div>
               </div>
             </div>
