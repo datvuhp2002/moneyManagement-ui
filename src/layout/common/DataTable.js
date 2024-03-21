@@ -1,8 +1,15 @@
 import React, { useEffect, useState } from "react";
 import LiveSearch from "./LiveSearch";
+import { Hidden } from "@mui/material";
 const DataTable = (props) => {
-  const { name, columns, data, onChangeTransactionType, onSelectedRows } =
-    props;
+  const {
+    name,
+    columns,
+    data,
+    onChangeTransactionType,
+    onSelectedRows,
+    wallet = false,
+  } = props;
   const [selectedRows, setSelectedRows] = useState([]);
   useEffect(() => {
     console.log("selected rows=> ", selectedRows);
@@ -57,26 +64,31 @@ const DataTable = (props) => {
     onChangeTransactionType(target.value);
   };
   return (
-    <div className="card mb-4 ">
+    <div
+      className="card mb-4 "
+      style={{ maxHeight: "65rem", overflowY: "scroll" }}
+    >
       <div className="card-header">
         <i className="fas fa-table me-1">{name}</i>
       </div>
       <div className="card-body">
         <div className="row mb-3">
-          <div className="col-sm-12 col-md-6">
-            <label className="d-inline-flex w-25">
-              <select
-                name="example_length"
-                className="form-select form-select-sm ms-1 me-1 "
-                onChange={onChangeOption}
-              >
-                <option value="" defaultChecked>
-                  Tất cả
-                </option>
-                <option value="Chi">Chi</option>
-                <option value="Thu">Thu</option>
-              </select>
-            </label>
+          <div className=" d-flex justify-content-end">
+            {!wallet && (
+              <label className="d-inline-flex w-25">
+                <select
+                  name="example_length"
+                  className="form-select form-select-sm ms-1 me-1  fs-5"
+                  onChange={onChangeOption}
+                >
+                  <option value="" defaultChecked>
+                    Tất cả
+                  </option>
+                  <option value="Chi">Chi</option>
+                  <option value="Thu">Thu</option>
+                </select>
+              </label>
+            )}
           </div>
         </div>
         <table

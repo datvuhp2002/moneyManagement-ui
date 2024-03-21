@@ -181,7 +181,7 @@ const QuanLyGiaoDich = () => {
           </Wrapper>
         </Wrapper>
         <div className={cx("add_manager col-7")}>
-          <Wrapper className="py-4 px-4 mt-4">
+          <Wrapper className="py-4 px-4">
             <div
               className={cx(
                 "d-flex align-items-center justify-content-between mb-4"
