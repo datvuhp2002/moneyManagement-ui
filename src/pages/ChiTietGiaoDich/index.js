@@ -80,6 +80,19 @@ const ChiTietGiaoDich = () => {
       }
     }
   };
+  const onChangeCategoriesGroup = (e) => {
+    console.log();
+    requestCategory(e.target.value);
+  };
+  const requestCategory = async (id) => {
+    await requestApi(`/category/getAll?categoriesGroup_id=${id}`, "GET")
+      .then((res) => {
+        setAllCategoryData(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const onSubmit = async (data) => {
     try {
@@ -125,7 +138,6 @@ const ChiTietGiaoDich = () => {
   useEffect(() => {
     const promiseGetAllWallet = requestApi(`/wallet/getAll`, "GET");
     const promiseGetAllCategoriesGroup = requestApi(`/category-group/getAll`);
-    const promiseGetAllCategory = requestApi(`/category/getAll`);
     const promiseGetAllCurrency = requestApi(`/currency`);
     const promiseDetailTransactionData = requestApi(
       `/transaction/detail/${params.id}`,
@@ -135,13 +147,13 @@ const ChiTietGiaoDich = () => {
       Promise.all([
         promiseDetailTransactionData,
         promiseGetAllCurrency,
-        promiseGetAllCategory,
         promiseGetAllCategoriesGroup,
         promiseGetAllWallet,
       ])
         .then((res) => {
           setTransactionData({
             ...res[0].data,
+            recordDate: res[0].recordDate,
             paymentImage: `${process.env.REACT_APP_API_URL}/${res[0].data.paymentImage}`,
           });
           setCategoryGroupData(res[0].data.ownership_categoriesGroup);
@@ -149,9 +161,9 @@ const ChiTietGiaoDich = () => {
           setCurrencyData(res[0].data.ownership_currency);
           setWalletData(res[0].data.ownership_wallet);
           setAllCurrencyData(res[1].data.data);
-          setAllCategoryData(res[2].data.data);
-          setAllCategoryGroupData(res[3].data.data);
-          setAllWalletData(res[4].data.data);
+          setAllCategoryGroupData(res[2].data.data);
+          setAllWalletData(res[3].data.data);
+          requestCategory(res[1].data.data[0].id);
         })
         .catch((err) => {
           console.log(err.message);
@@ -237,6 +249,8 @@ const ChiTietGiaoDich = () => {
                 <div>
                   <Input
                     type="date"
+                    text={showForm}
+                    data={transactionData.recordDate}
                     register={{
                       ...register(`recordDate`, {
                         required: `Ngày giao dịch không được để trống`,
@@ -283,7 +297,10 @@ const ChiTietGiaoDich = () => {
               <div className="mt-3">
                 <h3 className="w-40">Thể loại giao dịch</h3>
                 <div>
-                  <select {...register(`categoriesGroup_id`)}>
+                  <select
+                    {...register(`categoriesGroup_id`)}
+                    onChange={onChangeCategoriesGroup}
+                  >
                     {allCategoryGroupData.map((item, index) => {
                       return (
                         <option value={item.id} key={index}>
@@ -300,7 +317,7 @@ const ChiTietGiaoDich = () => {
                   <select {...register(`category_id`)}>
                     {allCategoryData.map((item, index) => {
                       return (
-                        <option value={item.categoriesGroup_id} key={index}>
+                        <option value={item.id} key={index}>
                           {item.name}
                         </option>
                       );
