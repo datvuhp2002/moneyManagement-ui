@@ -126,7 +126,7 @@ const ChiTietGiaoDich = () => {
     const promiseGetAllWallet = requestApi(`/wallet/getAll`, "GET");
     const promiseGetAllCategoriesGroup = requestApi(`/category-group/getAll`);
     const promiseGetAllCategory = requestApi(`/category/getAll`);
-    const promiseGetAllCurrency = requestApi(`/currency/getAll`);
+    const promiseGetAllCurrency = requestApi(`/currency`);
     const promiseDetailTransactionData = requestApi(
       `/transaction/detail/${params.id}`,
       "GET"
