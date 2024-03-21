@@ -171,7 +171,7 @@ const QuanLyVi = () => {
       setStartDate(startDate);
       setEndDate(endDate);
     }
-    const query = `?search=${searchString}&page=${currentPage}&start_date=${startDate}&end_date=${endDate}&transaction_type=${transactionType}`;
+    const query = `?start_date=${startDate}&end_date=${endDate}&transaction_type=${transactionType}`;
     const promiseStatistics = requestApi(
       `/statistics/calculatorByRange${query}`,
       "GET"

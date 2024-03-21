@@ -1,14 +1,8 @@
 import React, { useEffect, useState } from "react";
 import LiveSearch from "./LiveSearch";
 const DataTable = (props) => {
-  const {
-    name,
-    columns,
-    data,
-    onChangeTransactionType,
-    onKeySearch,
-    onSelectedRows,
-  } = props;
+  const { name, columns, data, onChangeTransactionType, onSelectedRows } =
+    props;
   const [selectedRows, setSelectedRows] = useState([]);
   useEffect(() => {
     console.log("selected rows=> ", selectedRows);
@@ -83,9 +77,6 @@ const DataTable = (props) => {
                 <option value="Thu">Thu</option>
               </select>
             </label>
-          </div>
-          <div className="col-sm-12 col-md-6 d-flex">
-            <LiveSearch onKeySearch={onKeySearch} />
           </div>
         </div>
         <table
