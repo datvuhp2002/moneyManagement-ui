@@ -20,10 +20,6 @@ import moment from "moment";
 const cx = classNames.bind(styles);
 const Home = () => {
   const dispatch = useDispatch();
-  const [numOfPage, setNumOfPages] = useState(1);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(10);
-  const [searchString, setSearchString] = useState("");
   const [statisticsData, setStatisticsData] = useState({});
   const [transactionsData, setTransactionsData] = useState([]);
   const [statisticsRangeMonthData, setStatisticsRangeMonthData] = useState({});
@@ -57,7 +53,7 @@ const Home = () => {
       setStartDate(startDate);
       setEndDate(endDate);
     }
-    const query = `?transaction_type=${transactionType}&items_per_page=${itemsPerPage}&page=${currentPage}&search=${searchString}&start_date=${startDate}&end_date=${endDate}`;
+    const query = `?transaction_type=${transactionType}&start_date=${startDate}&end_date=${endDate}`;
     const promiseStatistics = requestApi(
       `/statistics/calculatorByRange${query}`,
       "GET"

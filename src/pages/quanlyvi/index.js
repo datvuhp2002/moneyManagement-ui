@@ -13,6 +13,7 @@ import {
   faBuildingColumns,
   faCartShopping,
   faEye,
+  faPencil,
   faPhone,
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
@@ -33,6 +34,8 @@ const QuanLyVi = () => {
   const {
     register,
     handleSubmit,
+    setValue,
+    reset,
     formState: { errors },
   } = useForm();
   const dispatch = useDispatch();
@@ -52,26 +55,23 @@ const QuanLyVi = () => {
   const [deleteItems, setDeleteItems] = useState(null);
   const [selectedRows, setSelectedRows] = useState([]);
   const [refresh, setRefresh] = useState(Date.now());
+  const [isEdit, setIsEdit] = useState(false);
   const columns = [
     {
       name: "#",
       element: (row) => row.id,
     },
     {
-      name: "Loại giao dịch",
-      element: (row) => (row.transactionType === "Expense" ? "Chi" : "Thu"),
+      name: "Tên ví",
+      element: (row) => row.name,
     },
     {
       name: "Số tiền",
-      element: (row) => row.bill,
+      element: (row) => row.amount,
     },
     {
-      name: "Ngày giao dịch",
-      element: (row) => moment(row.recordDate).local("vi").format("LL"),
-    },
-    {
-      name: "Ghi chú",
-      element: (row) => row.note,
+      name: "Ngày tạo ví",
+      element: (row) => moment(row.createdAt).local("vi").format("LL"),
     },
     {
       name: "Actions",
@@ -79,11 +79,11 @@ const QuanLyVi = () => {
         <>
           <div className="d-flex">
             <Button
-              leftIcon={<FontAwesomeIcon icon={faEye} />}
-              to={`/quanlygiaodich/chitietgiaodich/${row.id}`}
+              leftIcon={<FontAwesomeIcon icon={faPencil} />}
+              onClick={() => handleView(row)}
               className="btn btn-sm btn-warning me-1"
             >
-              <i className="fa fa-pencil"></i> Xem
+              Sửa
             </Button>
             <Button
               deleteBtn
@@ -103,7 +103,12 @@ const QuanLyVi = () => {
     setStartDate(startDate);
     setEndDate(endDate);
   };
-
+  const handleView = (row) => {
+    setIsEdit(true);
+    setValue("id", row.id);
+    setValue("name", row.name);
+    setValue("amount", row.amount);
+  };
   const getWeekRange = (date) => {
     const startOfWeek = date.startOf("week");
     const endOfWeek = date.endOf("week");
@@ -125,7 +130,7 @@ const QuanLyVi = () => {
   const requestDeleteApi = () => {
     if (deleteType === "single") {
       dispatch(actions.controlLoading(true));
-      requestApi(`/transaction/${deleteItems}`, "DELETE")
+      requestApi(`/wallet/${deleteItems}`, "DELETE")
         .then((res) => {
           setShowModal(false);
           setRefresh(Date.now());
@@ -138,14 +143,21 @@ const QuanLyVi = () => {
         });
     }
   };
-
-  const onSubmit = async (data) => {
+  const onClickResetForm = () => {
+    setValue("id", "");
+    setValue("name", "");
+    setValue("amount", "");
+    reset();
+    setIsEdit(false);
+  };
+  const onUpdate = async (data) => {
     try {
-      await requestApi(`/wallet`, "POST", data)
+      await requestApi(`/wallet/${data.id}`, "PUT", data)
         .then((res) => {
-          toast.success("Thêm ví thành công", {
+          toast.success("Cập nhật ví thành công", {
             position: "top-right",
           });
+          fetchWalletData();
         })
         .catch((err) => {
           console.log("Err", err);
@@ -163,6 +175,40 @@ const QuanLyVi = () => {
         });
     } catch (err) {}
   };
+  const onSubmit = async (data) => {
+    try {
+      await requestApi(`/wallet`, "POST", data)
+        .then((res) => {
+          toast.success("Thêm ví thành công", {
+            position: "top-right",
+          });
+          fetchWalletData();
+        })
+        .catch((err) => {
+          console.log("Err", err);
+          if (typeof err.response !== "undefined") {
+            if (err.response.status !== 201) {
+              toast.error(err.response.data.message, {
+                position: "top-right",
+              });
+            }
+          } else {
+            toast.error("Server is down, please try again", {
+              position: "top-right",
+            });
+          }
+        });
+    } catch (err) {}
+  };
+  const fetchWalletData = () => {
+    requestApi(`/wallet/getAll`, "GET")
+      .then((res) => {
+        setWalletData(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   useEffect(() => {
     console.log(transactionType);
     if (!startDate || !endDate) {
@@ -171,7 +217,7 @@ const QuanLyVi = () => {
       setStartDate(startDate);
       setEndDate(endDate);
     }
-    const query = `?search=${searchString}&page=${currentPage}&start_date=${startDate}&end_date=${endDate}&transaction_type=${transactionType}`;
+    const query = `?start_date=${startDate}&end_date=${endDate}&transaction_type=${transactionType}`;
     const promiseStatistics = requestApi(
       `/statistics/calculatorByRange${query}`,
       "GET"
@@ -180,6 +226,7 @@ const QuanLyVi = () => {
       `/statistics/calculatorByMonth?date=${startDate}`,
       "GET"
     );
+
     const promiseWallet = requestApi(`/wallet/getAll`, "GET");
     dispatch(actions.controlLoading(true));
     Promise.all([promiseStatistics, promiseStatisticsMonth, promiseWallet])
@@ -247,12 +294,20 @@ const QuanLyVi = () => {
                 className="w-50"
               />
               <div className="d-flex">
-                <Button login rounded>
-                  Cập nhật số dư
-                </Button>
-                <Button login rounded onClick={handleSubmit(onSubmit)}>
-                  Thêm
-                </Button>
+                {isEdit ? (
+                  <div className="d-flex">
+                    <Button login rounded onClick={onClickResetForm}>
+                      Huỷ
+                    </Button>
+                    <Button login rounded onClick={handleSubmit(onUpdate)}>
+                      Cập nhật ví
+                    </Button>
+                  </div>
+                ) : (
+                  <Button login rounded onClick={handleSubmit(onSubmit)}>
+                    Thêm
+                  </Button>
+                )}
               </div>
             </div>
           </div>
@@ -260,12 +315,10 @@ const QuanLyVi = () => {
         <Wrapper className="py-5 px-4 ">
           <h1> Giao dịch</h1>
           <DataTable
-            name={`Lịch sử giao dịch theo tháng  ${moment(startDate)
-              .local("vi")
-              .format("LL")} đến ngày
-              ${moment(endDate).local("vi").format("LL")}`}
+            name={`Ví của bạn`}
+            wallet
             columns={columns}
-            data={transactionsData}
+            data={walletData}
             onChangeTransactionType={setTransactionType}
             onKeySearch={(keywords) => {
               setSearchString(keywords);

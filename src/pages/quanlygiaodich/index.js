@@ -28,10 +28,7 @@ import "~/helper/vi";
 const cx = classNames.bind(styles);
 const QuanLyGiaoDich = () => {
   const dispatch = useDispatch();
-  const [numOfPage, setNumOfPages] = useState(1);
-  const [currentPage, setCurrentPage] = useState(1);
   const [transactionType, setTransactionType] = useState("");
-  const [searchString, setSearchString] = useState("");
   const [cardData, setCardData] = useState([]);
   const [dateValue, setdateValue] = useState(dayjs().startOf("week"));
   const [startDate, setStartDate] = useState();
@@ -138,7 +135,7 @@ const QuanLyGiaoDich = () => {
       setStartDate(startDate);
       setEndDate(endDate);
     }
-    const query = `?search=${searchString}&page=${currentPage}&start_date=${startDate}&end_date=${endDate}&transaction_type=${transactionType}`;
+    const query = `?start_date=${startDate}&end_date=${endDate}&transaction_type=${transactionType}`;
     const promiseStatistics = requestApi(
       `/statistics/calculatorByRange${query}`,
       "GET"
@@ -152,7 +149,6 @@ const QuanLyGiaoDich = () => {
     Promise.all([promiseStatistics, promiseStatisticsMonth, promiseWallet])
       .then((res) => {
         dispatch(actions.controlLoading(false));
-        setNumOfPages(res[0].data.lastPage);
         setStatisticsData(res[0].data);
         setTransactionsData(res[0].data.transaction.data);
         console.log(res[0].data.transaction.data);
@@ -161,7 +157,7 @@ const QuanLyGiaoDich = () => {
       .catch((err) => {
         dispatch(actions.controlLoading(false));
       });
-  }, [startDate, endDate, searchString, transactionType]);
+  }, [startDate, endDate, transactionType]);
   return (
     <>
       <div className={cx("wrapper", "row d-flex")}>
@@ -172,11 +168,10 @@ const QuanLyGiaoDich = () => {
           <Wrapper slide_card_money>
             <SlideCard data={walletData} />
           </Wrapper>
-          {/* <Wrapper slide_card_money className={cx("mt-4")}>
-          <SlideCard data={cardData} />
-        </Wrapper> */}
+          <Wrapper slide_card_money className={cx("mt-4")}>
+            <SlideCard data={walletData} />
+          </Wrapper>
           <Wrapper chart_data className={("bieudocot", "p-1 mt-5")}>
-            {/* Biểu đồ cột */}
             <h2 style={{ textAlign: "center" }}>Biểu đồ cột</h2>
             <BarChartLayout
               data={statisticsData}
@@ -186,7 +181,7 @@ const QuanLyGiaoDich = () => {
           </Wrapper>
         </Wrapper>
         <div className={cx("add_manager col-7")}>
-          <Wrapper className="py-4 px-4 mt-4">
+          <Wrapper className="py-4 px-4">
             <div
               className={cx(
                 "d-flex align-items-center justify-content-between mb-4"
@@ -211,9 +206,6 @@ const QuanLyGiaoDich = () => {
               columns={columns}
               data={transactionsData}
               onChangeTransactionType={setTransactionType}
-              onKeySearch={(keywords) => {
-                setSearchString(keywords);
-              }}
               onSelectedRows={(rows) => {
                 console.log("Selected rows in user list component", rows);
                 setSelectedRows(rows);
