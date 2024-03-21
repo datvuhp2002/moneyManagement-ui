@@ -121,7 +121,6 @@ const ThemGiaoDich = () => {
         {paymentImage && (
           <Image
             avatar_profile
-            rounded
             src={paymentImage}
             className={cx("avatar-img")}
           />
