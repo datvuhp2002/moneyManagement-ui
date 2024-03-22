@@ -77,7 +77,7 @@ const Footer = () => (
                 window.open("https://www.facebook.com/yourpage", "_blank");
               }}
             >
-              facebook
+              Facebook
             </Button>
             <Button
               variant="primary"
@@ -86,7 +86,7 @@ const Footer = () => (
                 window.location.href = "/Error";
               }}
             >
-              gmail
+              Gmail
             </Button>
             <Button
               variant="primary"
@@ -95,7 +95,7 @@ const Footer = () => (
                 window.location.href = "tel:0326456789";
               }}
             >
-              <FontAwesomeIcon icon={faSquarePhone} size="2x" />
+             Phone
             </Button>
           </div>
         </Col>

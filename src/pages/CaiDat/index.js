@@ -114,8 +114,8 @@ const SettingsForm = () => {
                 value={language}
                 onChange={(e) => setLanguage(e.target.value)}
               >
+                <option value="tiengviet">Tiếng Việt</option>
                 <option value="tiengAnh">Tiếng Anh</option>
-                <option value="tiengViet">Tiếng Việt</option>
               </Form.Control>
             </Form.Group>
             <Button
@@ -187,16 +187,6 @@ const SettingsForm = () => {
             >
               Hủy
             </Button>
-            {saveSuccess && (
-              <Alert variant="success" className="mt-2">
-                Lưu thành công!
-              </Alert>
-            )}
-            {cancelSuccess && (
-              <Alert variant="danger" className="mt-2">
-                Hủy thành công!
-              </Alert>
-            )}
           </Form>
         </Col>
         <Col
@@ -246,16 +236,6 @@ const SettingsForm = () => {
             >
               Hủy
             </Button>
-            {saveSuccess && (
-              <Alert variant="success" className="mt-2">
-                Lưu thành công!
-              </Alert>
-            )}
-            {cancelSuccess && (
-              <Alert variant="danger" className="mt-2">
-                Hủy thành công!
-              </Alert>
-            )}
           </Form>
         </Col>
 
@@ -335,16 +315,6 @@ const SettingsForm = () => {
             >
               Hủy
             </Button>
-            {saveSuccess && (
-              <Alert variant="success" className="mt-2">
-                Lưu thành công!
-              </Alert>
-            )}
-            {cancelSuccess && (
-              <Alert variant="danger" className="mt-2">
-                Hủy thành công!
-              </Alert>
-            )}
           </Form>
         </Col>
       </Row>
