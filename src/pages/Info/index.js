@@ -7,13 +7,12 @@ import styles from "./TrangCaNhan.module.scss";
 import Image from "~/components/Image";
 import Button from "~/components/Button";
 import Input from "~/components/Input";
-import Logo from "~/public/assets/images/logoApp.png";
 import { Wrapper } from "~/layout/components/Popper";
 import { useDispatch } from "react-redux";
 import * as actions from "~/redux/actions";
 import { useForm } from "react-hook-form";
 const cx = classNames.bind(styles);
-const TrangCaNhan = () => {
+const Info = () => {
   const dispath = useDispatch();
   const navigate = useNavigate();
   const {
@@ -86,7 +85,7 @@ const TrangCaNhan = () => {
         dispath(actions.controlLoading(true));
         requestApi(
           "/users/upload-avatar",
-          "PUT",
+          "POST",
           formData,
           "json",
           "multipart/form-data"
@@ -109,7 +108,7 @@ const TrangCaNhan = () => {
   const onSubmit = async (data) => {
     try {
       const { avatar, ...userDataWithoutAvatar } = data;
-      await requestApi("/users", "PUT", userDataWithoutAvatar)
+      await requestApi("/users/update", "PUT", userDataWithoutAvatar)
         .then((res) => {
           toast.success("cập nhật thành công", {
             position: "top-right",
@@ -138,6 +137,7 @@ const TrangCaNhan = () => {
     try {
       requestApi("/users/profile", "GET")
         .then((res) => {
+          console.log("data::", res.data);
           setUserData({
             ...res.data,
             avatar: `${process.env.REACT_APP_API_URL}/${res.data.avatar}`,
@@ -207,4 +207,4 @@ const TrangCaNhan = () => {
   );
 };
 
-export default TrangCaNhan;
+export default Info;

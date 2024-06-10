@@ -1,91 +1,9 @@
 .footer {
   background-color: rgba(0, 0, 0, 0.926);
-  font-family: 'Roboto', sans-serif;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  color: white;
+  text-align: center;
 }
-
-.footer h2 {
-  font-size: 20px; /* Kích thước font chữ */
-  font-weight: bold; /* Độ đậm của font chữ */
-  
-}
-
-.footer ul {
-  list-style-type: none; /* Loại bỏ các dấu đầu dòng của danh sách */
-  padding: 0; /* Xóa padding mặc định */
-}
-
-.footer ul li {
-  margin-bottom: 10px; /* Khoảng cách giữa các mục trong danh sách */
-}
-
-.footer ul li:last-child {
-  margin-bottom: 0; /* Loại bỏ khoảng cách dưới cùng của mục cuối cùng */
-}
-
-// footer.module.scss
-
-.facebook {
-  background-color: #225ee1; // Màu nền của nút Facebook
-  border-color: #2360e3; // Màu viền của nút Facebook
-
-  &:hover {
-    background-color: #2d4373; // Màu nền khi di chuột qua của nút Facebook
-    border-color: #dfe3ea; // Màu viền khi di chuột qua của nút Facebook
-  }
-}
-
-.gmail {
-  background-color: #dd4b39; // Màu nền của nút Gmail
-  border-color: #dd4b39; // Màu viền của nút Gmail
-
-  &:hover {
-    background-color: #7d2519; // Màu nền khi di chuột qua của nút Gmail
-    border-color: #fcf8f8; // Màu viền khi di chuột qua của nút Gmail
-  }
-}
-
-.phone {
-  background-color: #25d366; // Màu nền của nút Phone
-  border-color: #25d366; // Màu viền của nút Phone
-
-  &:hover {
-    background-color: #128c7e; // Màu nền khi di chuột qua của nút Phone
-    border-color: #ecf1f1; // Màu viền khi di chuột qua của nút Phone
-  }
-}
-
-.thongtin {
-  list-style: none; // Loại bỏ dấu đầu dòng
-  padding: 0; // Xóa padding mặc định
-  margin-left: 8rem;
-}
-
-.sanpham{
-  margin-left: 16rem;
-  ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-
-    li {
-      a {
-        display: inline-block;
-        border: 1px solid transparent;
-        border-radius: 5px;
-        transition: all 0.3s ease;
-        text-decoration: none;
-        color: #fff; // Màu chữ
-
-        &:hover {
-          background-color: #0938e3; // Màu nền hover
-          border-color: #ddd; // Màu viền hover
-        }
-
-        svg {
-          margin-right: 10px; // Khoảng cách giữa icon và text
-        }
-      }
-    }
-  }
-}
-

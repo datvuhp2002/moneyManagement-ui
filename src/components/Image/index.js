@@ -9,8 +9,9 @@ const Image = ({
   logo,
   className,
   avatar,
+  background,
   avatar_profile,
-  fallback: customFallback = images.default,
+  fallback: customFallback = images.logo,
   w100,
   rounded,
   w50,
@@ -18,6 +19,7 @@ const Image = ({
   h100,
   h50,
   minh30,
+  courseImg,
   ...props
 }) => {
   const [fallback, setFallback] = useState("");
@@ -29,6 +31,7 @@ const Image = ({
     logo,
     w100,
     w50,
+    background,
     avatar,
     rounded,
     minw30,
@@ -36,6 +39,7 @@ const Image = ({
     avatar_profile,
     h50,
     minh30,
+    courseImg,
     [className]: className,
   });
   return (

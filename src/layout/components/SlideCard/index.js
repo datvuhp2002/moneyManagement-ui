@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import Carousel from "react-bootstrap/Carousel";
 import Card from "../Card";
 import "./slider.scss";
-import { Wrapper } from "../Popper";
 const SlideCard = ({ data }) => {
   useEffect(() => {
     console.log(data);
@@ -19,11 +18,11 @@ const SlideCard = ({ data }) => {
     });
   };
   return (
-    <Wrapper className="w-100">
+    <div className="w-100">
       <Carousel data-bs-theme="dark" interval={null}>
         {renderData()}
       </Carousel>
-    </Wrapper>
+    </div>
   );
 };
 

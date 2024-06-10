@@ -2,15 +2,18 @@ import config from "~/config";
 import Home from "~/pages/Home";
 import Login from "~/pages/Login";
 import Register from "~/pages/Register";
-import QuanLyGiaoDich from "~/pages/quanlygiaodich";
-import QuanLyVi from "~/pages/quanlyvi";
+import LearningParts from "~/pages/LearningParts";
+import Blog from "~/pages/Blog";
 import ThietLapUngDung from "~/pages/thietlapungdung";
-import TrangCaNhan from "~/pages/TrangCaNhan";
+import Info from "~/pages/Info";
 import CaiDat from "~/pages/CaiDat";
 import ReportErrorPage from "~/pages/CaiDat/Error";
 import FooterOnly from "~/layout/FooterOnly";
 import ChiTietGiaoDich from "~/pages/ChiTietGiaoDich";
-import ThemGiaoDich from "~/pages/themgiaodich";
+import CourseDetail from "~/pages/CourseDetail";
+import CreatePost from "~/pages/CreatePost";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHome, faNewspaper, faRoad } from "@fortawesome/free-solid-svg-icons";
 const publicRoutes = [
   {
     path: config.routes.login,
@@ -24,29 +27,32 @@ const publicRoutes = [
   },
 ];
 const privateRoutes = [
-  { path: config.routes.home, component: Home, name: "Trang chủ" },
   {
-    path: config.routes.quanlygiaodich,
-    component: QuanLyGiaoDich,
-    name: "Quản lý giao dịch",
+    path: config.routes.home,
+    component: Home,
+    name: "Trang chủ",
+    icon: <FontAwesomeIcon icon={faHome} />,
   },
   {
-    path: config.routes.quanlyvi,
-    component: QuanLyVi,
-    name: "Quản lý ví",
+    path: config.routes.LearningParts,
+    component: LearningParts,
+    name: "Lộ trình",
+    icon: <FontAwesomeIcon icon={faRoad} />,
   },
   {
-    path: config.routes.thietlapungdung,
-    component: ThietLapUngDung,
-    name: "Thiết Lập ứng dụng",
+    path: config.routes.blog,
+    component: Blog,
+    name: "Bài viết",
+    icon: <FontAwesomeIcon icon={faNewspaper} />,
   },
   {
-    path: config.routes.trangcanhan,
-    component: TrangCaNhan,
+    path: config.routes.Info,
+    component: Info,
   },
+  { path: config.routes.courseDetail, component: CourseDetail },
+  { path: config.routes.createPost, component: CreatePost },
   { path: config.routes.caidat, component: CaiDat },
   { path: config.routes.error, component: ReportErrorPage },
   { path: config.routes.chitietgiaodich, component: ChiTietGiaoDich },
-  { path: config.routes.themgiaodich, component: ThemGiaoDich },
 ];
 export { publicRoutes, privateRoutes };

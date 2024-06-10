@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Wrapper } from "~/layout/components/Popper";
 import classNames from "classnames/bind";
 import styles from "./Thietlapungdung.module.scss";
 import { Row, Col, Modal, Badge } from "react-bootstrap";
@@ -104,7 +103,7 @@ const ThietLapUngDung = () => {
     switch (category) {
       case "expense":
         return (
-          <Wrapper className="d-flex  flex-wrap p-4 mt-4 h-100">
+          <div className="d-flex  flex-wrap p-4 mt-4 h-100">
             <Button
               leftIcon={<FontAwesomeIcon icon={faTint} />}
               variant="outline-primary"
@@ -162,11 +161,11 @@ const ThietLapUngDung = () => {
             <Button variant="outline-primary" onClick={handleAddItem}>
               <FontAwesomeIcon icon={faMoneyBill} /> Thêm mới
             </Button>
-          </Wrapper>
+          </div>
         );
       case "income":
         return (
-          <Wrapper className="d-flex flex-wrap p-4 mt-4 h-100">
+          <div className="d-flex flex-wrap p-4 mt-4 h-100">
             <Button
               leftIcon={<FontAwesomeIcon icon={faUser} />}
               variant="outline-primary"
@@ -192,7 +191,7 @@ const ThietLapUngDung = () => {
             >
               Thêm mới
             </Button>
-          </Wrapper>
+          </div>
         );
       default:
         return null;
@@ -200,8 +199,8 @@ const ThietLapUngDung = () => {
   };
   return (
     <div className={cx("wrapper", "d-flex")}>
-      <Wrapper manager_information className={cx("col-5 p-4")}>
-        <Wrapper className={cx("mt-3 p-3")}>
+      <div manager_information className={cx("col-5 p-4")}>
+        <div className={cx("mt-3 p-3")}>
           <h3>Hạn Mức Chi Tiêu</h3>
           <label>Đặt Hạn Mức Ngày</label>
           <select
@@ -243,8 +242,8 @@ const ThietLapUngDung = () => {
             <Button className={cx("button", "primary")}>Lưu</Button>
             <Button className={cx("button", "secondary")}>Hủy</Button>
           </div>
-        </Wrapper>
-        <Wrapper className={cx("mt-3 p-3")}>
+        </div>
+        <div className={cx("mt-3 p-3")}>
           <h2>Nhắc nhở Thanh Toán</h2>
           <div className="row">
             <div className="col">
@@ -264,12 +263,7 @@ const ThietLapUngDung = () => {
                     Thu
                   </Button>
                 </div>
-                <div
-                  className={cx(
-                    "chondanhmuc",
-                    ""
-                  )}
-                >
+                <div className={cx("chondanhmuc", "")}>
                   {renderSubcategories(selectedCategory)}
                 </div>
               </div>
@@ -295,10 +289,10 @@ const ThietLapUngDung = () => {
               </div>
             </div>
           </div>
-        </Wrapper>
-      </Wrapper>
+        </div>
+      </div>
       <div className={cx("danhmuc", "col-7 ms-4")}>
-        <Wrapper className={cx("thietlap", "p-3")}>
+        <div className={cx("thietlap", "p-3")}>
           <h3 style={{ textAlign: "center" }}>Thiết Lập Danh Mục</h3>
           <div className="row">
             <div className="col d-flex aligin-items-center justify-content-center">
@@ -375,7 +369,7 @@ const ThietLapUngDung = () => {
               </Button>
             </div>
           </Modal>
-        </Wrapper>
+        </div>
       </div>
     </div>
   );

@@ -2,7 +2,15 @@ import React, { useEffect } from "react";
 import styles from "./card.module.scss";
 import classNames from "classnames/bind";
 import { Wrapper } from "../Popper";
-
+import Image from "~/components/Image";
+import images from "~/public/assets/images";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faMoneyBill,
+  faMoneyBillWave,
+  faUserGroup,
+} from "@fortawesome/free-solid-svg-icons";
+import Button from "~/components/Button";
 const cx = classNames.bind(styles);
 
 const Card = ({ data, name, currency, amount }) => {
@@ -17,16 +25,24 @@ const Card = ({ data, name, currency, amount }) => {
 
   return (
     <div className={cx("wrapper")}>
-      <div className="d-flex aligin-items-center w-100 justify-content-center">
-        <h1>Ví tài khoản</h1>
+      <div
+        className={cx(
+          "thumbnail",
+          "d-flex aligin-items-center w-100 justify-content-center"
+        )}
+      >
+        <Button rounded to="/course-detail/1" className={cx("courseBtn")}>
+          Xem khóa học
+        </Button>
+        <Image courseImg src={images.background}></Image>
       </div>
       <div className="d-flex flex-column aligin-items-center w-100 justify-content-center">
         {/* Sử dụng giá trị đã xác định ở trên */}
-        <h2>{cardName}</h2>
-        <div className="d-flex aligin-datas-center row">
+        <h2>Kiến thức nhập môn</h2>
+        <div className={cx("title", "d-flex align-item-start")}>
           {/* Sử dụng giá trị đã xác định ở trên */}
-          <h1 className="col-8 overflow-x-auto text-nowrap">{cardAmount}</h1>
-          <h1 className="col-4">{cardCurrency}</h1>
+          <FontAwesomeIcon icon={faMoneyBillWave} />
+          <h4 className="col-4 p-0 mx-2">30000</h4>
         </div>
       </div>
     </div>

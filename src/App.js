@@ -28,7 +28,7 @@ function App() {
                     path={route.path}
                     element={
                       <Layout>
-                        <Container>
+                        <Container style={{ minWidth: "85%" }}>
                           <Page />
                         </Container>
                       </Layout>
@@ -52,7 +52,7 @@ function App() {
                     path={route.path}
                     element={
                       <Layout>
-                        <Container fluid="md">
+                        <Container style={{ minWidth: "85%" }}>
                           <Page />
                         </Container>
                       </Layout>

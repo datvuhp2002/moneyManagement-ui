@@ -1,12 +1,5 @@
 .wrapper {
-  .thu_chi {
-    font-size: 2rem;
-  }
-}
-.transaction_information {
-  max-height: 25rem;
-  overflow-y: scroll;
-  .input {
-    width: 95%;
+  .group-corse {
+    display: flex;
   }
 }
